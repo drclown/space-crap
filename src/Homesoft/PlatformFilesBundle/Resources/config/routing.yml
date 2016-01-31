@@ -1,3 +1,7 @@
 homesoft_platform_files_homepage:
     path:     /
-    defaults: { _controller: HomesoftPlatformFilesBundle:Default:index }
+    defaults: { _controller: HomesoftPlatformFilesBundle:Files:index }
+
+homesoft_platform_files_get_file:
+    path:   /{pathRemote}/get-files
+    defaults: { _controller: HomesoftPlatformFilesBundle:Files:getFiles }

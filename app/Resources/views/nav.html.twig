@@ -1,0 +1,7 @@
+<nav class="navbar navbar-inverse">
+    <ul class="nav navbar-nav">
+        {% for remote in remotes %}
+            <li><a href="">{{ remote.getRealpath }}</a></li>
+        {% endfor %}
+    </ul>
+</nav>
