@@ -2,22 +2,32 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% stylesheets
-        '@HomesoftPlatformFilesBundle/Resources/public/css/bootstrap.min.css'
-        filter='cssrewrite'
-        %}
+        <title>{% block title %}space-crap Josay !{% endblock %}</title>
+        {% stylesheets '@HomesoftPlatformFilesBundle/Resources/public/css/bootstrap.min.css'
+        filter='cssrewrite' %}
             <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
         {% endstylesheets %}
+        <link rel="stylesheet" href="{{ asset('bundles/homesoftplatformfiles/css/jstree.min.css') }}" type="text/css" />
+
+        {% javascripts '@HomesoftPlatformFilesBundle/Resources/public/js/jquery-2.2.0.min.js'
+        '@HomesoftPlatformFilesBundle/Resources/public/js/bootstrap.min.js'
+        '@HomesoftPlatformFilesBundle/Resources/public/js/jstree.min.js'%}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+        <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+        <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        {% block body %}{% endblock %}
-        {% javascripts
-        '@HomesoftPlatformFilesBundle/Resources/public/js/jquery-2.2.0.min.js'
-        '@HomesoftPlatformFilesBundle/Resources/public/js/bootstrap.min.js'
-        %}
-        <script type="text/javascript" src="{{ asset_url }}"></script>
-        {% endjavascripts %}
+        <div class="container-fluid">
+            <nav>
+                {% include "nav.html.twig" %}
+            </nav>
+            <div id="content" class="row">
+                {% block body %}
+
+                {% endblock %}
+            </div>
+        </div>
     </body>
 </html>
