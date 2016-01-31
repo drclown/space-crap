@@ -3,11 +3,21 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        {% stylesheets
+        '@HomesoftPlatformFilesBundle/Resources/public/css/bootstrap.min.css'
+        filter='cssrewrite'
+        %}
+            <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+        {% endstylesheets %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        {% javascripts
+        '@HomesoftPlatformFilesBundle/Resources/public/js/jquery-2.2.0.min.js'
+        '@HomesoftPlatformFilesBundle/Resources/public/js/bootstrap.min.js'
+        %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
     </body>
 </html>
