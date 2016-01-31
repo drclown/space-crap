@@ -1,0 +1,3 @@
+homesoft_platform_files_homepage:
+    path:     /
+    defaults: { _controller: HomesoftPlatformFilesBundle:Default:index }
