@@ -1,3 +1,5 @@
+# app/config/routing.yml
+
 homesoft_platform_files:
     resource: "@HomesoftPlatformFilesBundle/Resources/config/routing.yml"
     prefix:   /

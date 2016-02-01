@@ -1,0 +1,24 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div id="tree-files"></div>
+<script>
+    $('#tree-files').jstree({
+        'core' : {
+            'data' : {
+                'url' : Routing.generate('homesoft_platform_files_get_files', { pathRemote: 'media' })
+            }
+        },
+        "types" : {
+            "dir" : {
+                //"icon" : "glyphicon glyphicon-flash"
+            },
+            "file" : {
+                //"icon" : "glyphicon glyphicon-ok"
+            }
+        },
+        "plugins" : [ "types" ]
+    });
+</script>
+{% endblock %}
+
