@@ -3,7 +3,6 @@
 namespace Homesoft\PlatformFilesBundle\services;
 
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
 
 
 class RemoteScanner {
@@ -61,16 +60,6 @@ class RemoteScanner {
         return $files;
     }
 
-    public function getParentPath($directory){
-        $parent = "#";
-        if($directory->getRelativePath() !== ""){
-            $dirs = explode("\\",$directory->getRealPath());
-            unset($dirs[(count($dirs)-1)]);
-            $parent = implode("\\", $dirs);
-        }
-        return $parent;
-    }
-
     public function getDirectories() {
         $finder = new Finder();
         $directories = array();
@@ -88,6 +77,15 @@ class RemoteScanner {
             );
         }
         return $directories;
+    }
+    public function getParentPath($directory){
+        $parent = "#";
+        if($directory->getRelativePath() !== ""){
+            $dirs = explode("/",$directory->getRealPath());
+            unset($dirs[(count($dirs)-1)]);
+            $parent = implode("/", $dirs);
+        }
+        return $parent;
     }
 
     public function setPathRemote($pathRemote) {

@@ -4,13 +4,14 @@ namespace Homesoft\PlatformFilesBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 
 
 class FilesController extends Controller
 {
     public function indexAction() {
         $remoteScanner = $this->container->get('homesoft_platform_files.remote_scanner');
-        $remoteScanner->setPathRemote("\\media");
+        $remoteScanner->setPathRemote("/media");
         $remotes = $remoteScanner->scanRemotes();
         return $this->render('HomesoftPlatformFilesBundle:Files:files.html.twig', array("remotes"=>$remotes));
     }
@@ -18,7 +19,7 @@ class FilesController extends Controller
     // Retourne views Files with the remote selected
     public function viewAction($remote) {
         $remoteScanner = $this->container->get('homesoft_platform_files.remote_scanner');
-        $remoteScanner->setPathRemote("\\media");
+        $remoteScanner->setPathRemote("/media");
         $remotes = $remoteScanner->scanRemotes();
         return $this->render('HomesoftPlatformFilesBundle:Default:index.html.twig', array(
             "remotes"=>$remotes,
@@ -26,15 +27,27 @@ class FilesController extends Controller
         ));
     }
 
-
-    // Retourne une reponse json de l'arborence Dossiers / Fichiers du chemin données
+    // Retourne une reponse json de l'arborence Dossiers / Fichiers du chemin donnï¿½es
     public function getFilesAction($pathRemote) {
         $remoteScanner = $this->container->get('homesoft_platform_files.remote_scanner');
-        $remoteScanner->setPathRemote("\\".$pathRemote);
+        $remoteScanner->setPathRemote("/".$pathRemote);
         $tree = $remoteScanner->getTree();
         $response = new Response(json_encode($tree));
         $response->headers->set('Content-Type', 'application/json');
         return $response;
+    }
+
+    public function playFileAction(Request $request){
+
+        $pathFile = escapeshellcmd($request->request->get("pathFile"));
+
+        $yo = exec("omxplayer ".$pathFile);
+        $response = new Response($yo);
+        return $response;
+    }
+
+    public function stopFileAction($pathFiles){
+        exec($pathFiles);
     }
 
 }

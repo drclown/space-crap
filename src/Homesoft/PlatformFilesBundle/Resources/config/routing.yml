@@ -3,11 +3,19 @@ homesoft_platform_files_homepage:
     defaults: { _controller: HomesoftPlatformFilesBundle:Files:index }
 
 homesoft_platform_files_view:
-    path:     /{remote}
+    path:     /view/{remote}
     defaults: { _controller: HomesoftPlatformFilesBundle:Files:view }
 
 homesoft_platform_files_get_files:
-    path:   /{pathRemote}/get-files
+    path:   /get-files/{pathRemote}
     defaults: { _controller: HomesoftPlatformFilesBundle:Files:getFiles }
     options:
         expose: true
+
+homesoft_platform_files_play_file:
+    path: /play-file
+    defaults: { _controller: HomesoftPlatformFilesBundle:Files:playFile }
+    options:
+        expose: true
+    requirements:
+            methods: POST

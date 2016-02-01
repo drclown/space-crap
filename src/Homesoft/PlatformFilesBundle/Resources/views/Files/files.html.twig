@@ -2,8 +2,13 @@
 
 {% block body %}
     <div id="tree-files"></div>
+    <button id="play-stop" class="btn btn-danger fa fa-stop"></button>
+    <button id="play-video" class="btn btn-success fa fa-play"></button>
+
 <script>
-    $('#tree-files').jstree({
+
+    $('#tree-files')
+    .jstree({
         'core' : {
             'data' : {
                 'url' : Routing.generate('homesoft_platform_files_get_files', { pathRemote: 'media' })
@@ -11,14 +16,26 @@
         },
         "types" : {
             "dir" : {
-                //"icon" : "glyphicon glyphicon-flash"
+                "icon" : "fa fa-folder-o"
             },
             "file" : {
-                //"icon" : "glyphicon glyphicon-ok"
+                "icon" : "fa fa-file-movie-o"
             }
         },
         "plugins" : [ "types" ]
+    })
+    .bind("select_node.jstree", function(evt, data){
+        console.log(data.node.id);
+        $("#play-video").val(data.node.id);
+    });
+    $("#play-video").on("click", function() {
+        console.log($(this).val());
+        var pathVideo = $(this).val();
+        $.ajax({
+            type: "POST",
+            data: {pathFile: pathVideo},
+            url: Routing.generate("homesoft_platform_files_play_file")
+        });
     });
 </script>
 {% endblock %}
-
