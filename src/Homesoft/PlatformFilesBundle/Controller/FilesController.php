@@ -6,9 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
-
-class FilesController extends Controller
-{
+class FilesController extends Controller {
     public function indexAction() {
         $remoteScanner = $this->container->get('homesoft_platform_files.remote_scanner');
         $remoteScanner->setPathRemote("/media");
@@ -16,7 +14,7 @@ class FilesController extends Controller
         return $this->render('HomesoftPlatformFilesBundle:Files:files.html.twig', array("remotes"=>$remotes));
     }
 
-    // Retourne views Files with the remote selected
+    // Retourne l'arborescences des fichiers à partir du path données en parametres
     public function viewAction($remote) {
         $remoteScanner = $this->container->get('homesoft_platform_files.remote_scanner');
         $remoteScanner->setPathRemote("/media");
@@ -37,17 +35,16 @@ class FilesController extends Controller
         return $response;
     }
 
-    public function playFileAction(Request $request){
-
+    public function playFileAction(Request $request) {
         $pathFile = escapeshellcmd($request->request->get("pathFile"));
-
         $yo = exec("omxplayer ".$pathFile);
         $response = new Response($yo);
         return $response;
     }
 
-    public function stopFileAction($pathFiles){
-        exec($pathFiles);
+    public function stopFileAction() {
+        $yo = exec("sudo killall omxplayer.bin");
+        $response = new Response($yo);
+        return $response;
     }
-
 }

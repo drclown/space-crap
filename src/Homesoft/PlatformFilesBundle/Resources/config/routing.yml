@@ -18,4 +18,10 @@ homesoft_platform_files_play_file:
     options:
         expose: true
     requirements:
-            methods: POST
+        methods: POST
+
+homesoft_platform_files_stop_file:
+    path: /stop-file
+    defaults: { _controller: HomesoftPlatformFilesBundle:Files:stopFile }
+    options:
+        expose: true

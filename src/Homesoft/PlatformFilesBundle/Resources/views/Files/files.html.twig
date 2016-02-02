@@ -25,7 +25,6 @@
         "plugins" : [ "types" ]
     })
     .bind("select_node.jstree", function(evt, data){
-        console.log(data.node.id);
         $("#play-video").val(data.node.id);
     });
     $("#play-video").on("click", function() {
@@ -35,6 +34,11 @@
             type: "POST",
             data: {pathFile: pathVideo},
             url: Routing.generate("homesoft_platform_files_play_file")
+        });
+    });
+    $("#play-stop").on("click", function() {
+        $.ajax({
+            url: Routing.generate("homesoft_platform_files_stop_file")
         });
     });
 </script>
