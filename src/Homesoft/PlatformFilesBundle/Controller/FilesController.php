@@ -36,15 +36,18 @@ class FilesController extends Controller {
     }
 
     public function playFileAction(Request $request) {
-        $pathFile = escapeshellcmd($request->request->get("pathFile"));
+        $pathFile = str_replace(' ','\ ', escapeshellcmd($request->request->get("pathFile")));;
         $yo = exec("omxplayer ".$pathFile);
         $response = new Response($yo);
         return $response;
     }
 
     public function stopFileAction() {
-        $yo = exec("sudo killall omxplayer.bin");
-        $response = new Response($yo);
+
+        $com = escapeshellcmd("sudo killall omxplayer.bin");
+        echo "yo";
+        $exec = exec($com);
+        $response = new Response($exec);
         return $response;
     }
 }
