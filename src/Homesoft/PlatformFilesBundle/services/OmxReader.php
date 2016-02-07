@@ -5,6 +5,7 @@ namespace Homesoft\PlatformFilesBundle\services;
 
 class OmxReader {
     public function play($file) {
+
         shell_exec('omxplayer '.$file);
         sleep(1);
     }

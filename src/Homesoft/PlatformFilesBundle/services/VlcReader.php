@@ -5,8 +5,10 @@ namespace Homesoft\PlatformFilesBundle\services;
 
 class VlcReader {
     public function play($file) {
-        shell_exec('cvlc '.$file);
-        sleep(1);
+        $msg = exec('cvlc '.$file);
+        echo $msg;
+        //sleep(1);
+        return $msg;
     }
     public function stop() {
         shell_exec('killall -9 cvlc');

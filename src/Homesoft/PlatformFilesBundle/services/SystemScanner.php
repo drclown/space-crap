@@ -14,30 +14,32 @@ class SystemScanner {
     private $mediaPlayer;
 
     public function _construct(){
+
         $this->setOs(PHP_OS);
-        $this->scanMediaPlayer();
+
     }
     public function scanMediaPlayer() {
-        if($this->checkOmxplayer()){
-            $this->setMediaPlayer("omxplayer");
-        }
         if($this->checkVlc()){
             $this->setMediaPlayer("cvlc");
+        }
+        if($this->checkOmxplayer()){
+            echo "yeah";
+            $this->setMediaPlayer("omxplayer");
         }
     }
     private function checkVlc() {
         $msg = shell_exec('cvlc --version');
         if($msg === "cvlc --version : commande introuvable"){
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
     private function checkOmxplayer(){
         $msg = shell_exec('omxplayer -v');
         if($msg === "omxplayer -v : commande introuvable") {
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
     public function getOs(){
         return $this->os;

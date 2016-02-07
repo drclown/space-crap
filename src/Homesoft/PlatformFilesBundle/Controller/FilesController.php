@@ -45,6 +45,7 @@ class FilesController extends Controller {
         $system = $this->container->get('homesoft_platform_files.system_scanner');
         $pathFile = $this->formatPathFile($request->request->get("pathFile"));
         $service = "";
+        $system->scanMediaPlayer();
         switch($system->getMediaPlayer()) {
             case "omxplayer":
                 $service = "omx_reader";
