@@ -7,7 +7,11 @@ use Symfony\Component\Finder\Finder;
 
 class RemoteScanner {
     private $pathRemote;
-    private $finder;
+    private $videoExtensions = ["mp4", "avi"];
+    private $imageExtensions = ["jpeg", "jpg", "png", "gif"];
+    private $audioExtensions = ["mp3"];
+    private $textExtensions = ["txt"];
+    private $codeExtensions = ["html", "php", "css", "xml"];
 
     /* Get directories in $path and return a finders array */
     public function scanRemotes() {
@@ -22,7 +26,6 @@ class RemoteScanner {
 
     public function scanRemoteFiles($path){
         $finder = new Finder();
-
         $files = $finder
             ->directories()
             ->in($path)
@@ -37,50 +40,59 @@ class RemoteScanner {
         return true;
     }
 
-    public function getTree() {
-        return array_merge($this->getDirectories($this->pathRemote), $this->getFiles($this->pathRemote));
+    public function getFileType($nameFile){
+        $type = "";
+        $extension = $this->getExtension($nameFile);
+        if(in_array($extension, $this->videoExtensions)){
+            $type = "-film";
+        }
+        elseif(in_array($extension, $this->imageExtensions)){
+            $type = "-image";
+        }
+        elseif(in_array($extension, $this->audioExtensions)){
+            $type = "-audio";
+        }
+        elseif(in_array($extension, $this->textExtensions)){
+            $type = "-code";
+        }
+        elseif(in_array($extension, $this->codeExtensions)){
+            $type = "-text";
+        }
+        return "file".$type;
     }
 
-    public function getFiles() {
+    public function getExtension($nameFile) {
+        $extension = explode(".", $nameFile);
+        if(count($extension) > 0) {
+            $extension = $extension[count($extension)-1];
+        }
+        return $extension;
+    }
+
+    public function getDirectoriesAndFiles() {
         $finder = new Finder();
-        $files = array();
-        $finder
-            ->files()
-            ->in($this->pathRemote)
-        ;
-        foreach($finder AS $file) {
-            $parent = $this->getParentPath($file);
-            $files[] = array(
-                "id"        => $file->getRealPath(),
-                "text"      => $file->getBasename(),
-                "type"      => $file->getType(),
+        $DirectoriesAndFiles = array();
+
+        foreach($finder->in($this->pathRemote) AS $DirectoryAndFile) {
+            $type = "dir";
+            if($DirectoryAndFile->getType() === "file") {
+                $type = $this->getFileType($DirectoryAndFile->getBasename());
+            }
+            $parent = $this->getParentPath($DirectoryAndFile);
+            $DirectoriesAndFiles[] = array(
+                "id"        => $DirectoryAndFile->getRealPath(),
+                "text"      => $DirectoryAndFile->getBasename(),
+                "type"      => $type,
                 "parent"    => $parent
             );
         }
-        return $files;
+        return $DirectoriesAndFiles;
     }
 
-    public function getDirectories() {
-        $finder = new Finder();
-        $directories = array();
-        $directoriesFinder = $finder
-            ->directories()
-            ->in($this->pathRemote)
-        ;
-        foreach($directoriesFinder AS $directory) {
-            $parent = $this->getParentPath($directory);
-            $directories[] = array(
-                "id"        => $directory->getRealPath(),
-                "text"      => $directory->getBasename(),
-                "type"      => $directory->getType(),
-                "parent"    => $parent
-            );
-        }
-        return $directories;
-    }
+
     public function getParentPath($directory){
         $parent = "#";
-        if($directory->getRelativePath() !== ""){
+        if($directory->getRelativePath() !== "") {
             $dirs = explode("/",$directory->getRealPath());
             unset($dirs[(count($dirs)-1)]);
             $parent = implode("/", $dirs);

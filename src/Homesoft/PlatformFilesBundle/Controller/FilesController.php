@@ -2,6 +2,8 @@
 
 namespace Homesoft\PlatformFilesBundle\Controller;
 
+namespace Homesoft\PlatformFilesBundle\services;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,29 +27,48 @@ class FilesController extends Controller {
         ));
     }
 
-    // Retourne une reponse json de l'arborence Dossiers / Fichiers du chemin donn�es
+    // Retourne une reponse json de l'arborence Dossiers / Fichiers du chemin données
     public function getFilesAction($pathRemote) {
         $remoteScanner = $this->container->get('homesoft_platform_files.remote_scanner');
         $remoteScanner->setPathRemote("/".$pathRemote);
-        $tree = $remoteScanner->getTree();
-        $response = new Response(json_encode($tree));
+        $directoriesAndFiles = $remoteScanner->getDirectoriesAndFiles();
+        $response = new Response(json_encode($directoriesAndFiles));
         $response->headers->set('Content-Type', 'application/json');
         return $response;
     }
 
+    public function formatPathFile($pathFile) {
+        return str_replace(' ','\\ ', $pathFile);
+    }
     public function playFileAction(Request $request) {
-        $pathFile = str_replace(' ','\ ', escapeshellcmd($request->request->get("pathFile")));;
-        $yo = exec("omxplayer ".$pathFile);
-        $response = new Response($yo);
-        return $response;
+        $pathFile = formatPathFile($request->request->get("pathFile"));
+        $omxService = $this->container->get('homesoft_platform_files.omx_reader');
+        return new Response($omxService->play($pathFile));
+    }
+    public function pauseFileAction(Request $request){
+        $pathFile = formatPathFile($request->request->get("pathFile"));
+        $omxService = $this->container->get('homesoft_platform_files.omx_reader');
+        return new Response($omxService->pause($pathFile));
     }
 
     public function stopFileAction() {
-
-        $com = escapeshellcmd("sudo killall omxplayer.bin");
-        echo "yo";
-        $exec = exec($com);
-        $response = new Response($exec);
-        return $response;
+        $omxService = $this->container->get('homesoft_platform_files.omx_reader');
+        return new Response($omxService->stop());
+    }
+    public function rewindFileAction() {
+        $omxService = $this->container->get('homesoft_platform_files.omx_reader');
+        return new Response($omxService->rewind());
+    }
+    public function advanceFileAction() {
+        $omxService = $this->container->get('homesoft_platform_files.omx_reader');
+        return new Response($omxService->advance());
+    }
+    public function increaseVolumeFileAction() {
+        $omxService = $this->container->get('homesoft_platform_files.omx_reader');
+        return new Response($omxService->increaseVolume());
+    }
+    public function decreaseVolumeFileAction() {
+        $omxService = $this->container->get('homesoft_platform_files.omx_reader');
+        return new Response($omxService->decreaseVolume());
     }
 }
