@@ -12,14 +12,29 @@
         'core' : {
             'data' : {
                 'url' : Routing.generate('homesoft_platform_files_get_files', { pathRemote: 'media' })
+            },
+            "themes" : {
+                "variant" : "large"
             }
         },
         "types" : {
             "dir" : {
                 "icon" : "fa fa-folder-o"
             },
-            "file" : {
+            "file-film" : {
+                "icon" : "fa fa-film"
+            },
+            "file-video" : {
                 "icon" : "fa fa-file-movie-o"
+            },
+            "file-image" : {
+                "icon" : "fa fa-file-image-o"
+            },
+            "file-sound" : {
+                "icon" : "fa fa-file-audio-o"
+            },
+            "file": {
+                "icon": "fa fa-file-o"
             }
         },
         "plugins" : [ "types" ]
