@@ -90,12 +90,21 @@ class RemoteScanner {
     }
 
 
-    public function getParentPath($directory){
+    public function getParentPath($directory) {
         $parent = "#";
         if($directory->getRelativePath() !== "") {
             $dirs = explode("/",$directory->getRealPath());
-            unset($dirs[(count($dirs)-1)]);
-            $parent = implode("/", $dirs);
+            if(count($dirs) == 1 ) {
+                $dirs = explode("\\",$directory->getRealPath());
+                unset($dirs[(count($dirs)-1)]);
+                $parent = implode("\\", $dirs);
+            }
+            else {
+                $dirs = explode("/",$directory->getRealPath());
+                unset($dirs[(count($dirs)-1)]);
+                $parent = implode("/", $dirs);
+            }
+
         }
         return $parent;
     }

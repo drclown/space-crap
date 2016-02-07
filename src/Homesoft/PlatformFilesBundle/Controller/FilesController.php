@@ -2,7 +2,7 @@
 
 namespace Homesoft\PlatformFilesBundle\Controller;
 
-namespace Homesoft\PlatformFilesBundle\services;
+//namespace Homesoft\PlatformFilesBundle\services;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,13 +40,29 @@ class FilesController extends Controller {
     public function formatPathFile($pathFile) {
         return str_replace(' ','\\ ', $pathFile);
     }
+
     public function playFileAction(Request $request) {
-        $pathFile = formatPathFile($request->request->get("pathFile"));
-        $omxService = $this->container->get('homesoft_platform_files.omx_reader');
-        return new Response($omxService->play($pathFile));
+        $system = $this->container->get('homesoft_platform_files.system_scanner');
+        $pathFile = $this->formatPathFile($request->request->get("pathFile"));
+        $service = "";
+        switch($system->getMediaPlayer()) {
+            case "omxplayer":
+                $service = "omx_reader";
+            break;
+            case "cvlc":
+                $service = "vlc_reader";
+            break;
+            case "":
+                return new response("Vous n'avez aucun lecteur video compatible avec ce fichier ! Installez omxplayer ou vlc");
+            break;
+        }
+
+        $mediaService = $this->container->get('homesoft_platform_files.'.$service);
+        return new Response($mediaService->play($pathFile));
     }
+
     public function pauseFileAction(Request $request){
-        $pathFile = formatPathFile($request->request->get("pathFile"));
+        $pathFile = $this->formatPathFile($request->request->get("pathFile"));
         $omxService = $this->container->get('homesoft_platform_files.omx_reader');
         return new Response($omxService->pause($pathFile));
     }
