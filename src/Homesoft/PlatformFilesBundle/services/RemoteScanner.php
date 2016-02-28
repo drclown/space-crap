@@ -1,5 +1,6 @@
 <?php
 
+namespace Homesoft\PlatformFilesBundle\services\RemoteScanner;
 namespace Homesoft\PlatformFilesBundle\services;
 
 use Symfony\Component\Finder\Finder;
@@ -13,7 +14,11 @@ class RemoteScanner {
     private $textExtensions = ["txt"];
     private $codeExtensions = ["html", "php", "css", "xml"];
 
-    /* Get directories in $path and return a finders array */
+    public function __construct($path = "") {
+        $this->setPathRemote($path);
+    }
+
+    /* Retourne les dossiers trouvés dans $this->pathRemote */
     public function scanRemotes() {
         $finder = new Finder();
         $remotes = $finder

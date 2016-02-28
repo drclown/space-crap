@@ -20,61 +20,21 @@
     </div>
 
 <script>
-
-$('#tree-files')
-.jstree({
-    'core' : {
-        'data' : {
-            'url' : Routing.generate('homesoft_platform_files_get_files', { pathRemote: 'media' })
-        },
-        "themes" : {
-            "variant" : "large"
-        }
-    },
-    "types" : {
-        "dir" : {
-            "icon" : "fa fa-folder-o"
-        },
-        "file-film" : {
-            "icon" : "fa fa-film"
-        },
-        "file-video" : {
-            "icon" : "fa fa-file-movie-o"
-        },
-        "file-image" : {
-            "icon" : "fa fa-file-image-o"
-        },
-        "file-sound" : {
-            "icon" : "fa fa-file-audio-o"
-        },
-        "file": {
-            "icon": "fa fa-file-o"
-        }
-    },
-    "plugins" : [ "types" ]
-})
-.bind("select_node.jstree", function(evt, data){
-    if(data.node.type === "file-film") {
-        $("#menu-video").show();
-        $("#play-video").val(data.node.id);
-    }
-    else {
-        $("#menu-video").hide();
-        $("#play-video").val("");
-    }
-});
-$("#play-video").on("click", function() {
-    console.log($(this).val());
-    var pathVideo = $(this).val();
-    $.ajax({
-        type: "POST",
-        data: {pathFile: pathVideo},
-        url: Routing.generate("homesoft_platform_files_play_file")
+$( document ).ready(function() {
+    createTreeFiles("/media");
+    $("#play-video").on("click", function() {
+        console.log($(this).val());
+        var pathVideo = $(this).val();
+        $.ajax({
+            type: "POST",
+            data: {pathFile: pathVideo},
+            url: Routing.generate("homesoft_platform_files_play_file")
+        });
     });
-});
-$("#play-stop").on("click", function() {
-    $.ajax({
-        url: Routing.generate("homesoft_platform_files_stop_file")
+    $("#play-stop").on("click", function() {
+        $.ajax({
+            url: Routing.generate("homesoft_platform_files_stop_file")
+        });
     });
 });
 

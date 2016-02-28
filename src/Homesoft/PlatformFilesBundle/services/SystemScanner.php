@@ -1,22 +1,18 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: tompouce
- * Date: 07/02/2016
- * Time: 14:36
- */
 
+namespace Homesoft\PlatformFilesBundle\services\SystemScanner;
 namespace Homesoft\PlatformFilesBundle\services;
+use Symfony\Component\HttpFoundation\Response;
+
 
 
 class SystemScanner {
     private $os;
     private $mediaPlayer;
 
-    public function _construct(){
-
+    public function _construct() {
         $this->setOs(PHP_OS);
-
+        $this->scanMediaPlayer();
     }
     public function scanMediaPlayer() {
         if($this->checkVlc()){
@@ -25,6 +21,22 @@ class SystemScanner {
         if($this->checkOmxplayer()){
             $this->setMediaPlayer("omxplayer");
         }
+    }
+
+    public function getVideoService(){
+        $service = "";
+        switch($this->getMediaPlayer()) {
+            case "omxplayer":
+                $service = "omx_reader";
+                break;
+            case "cvlc":
+                $service = "vlc_reader";
+                break;
+            case "":
+                return new response("Vous n'avez aucun lecteur video compatible avec ce fichier ! Installez omxplayer, vlc ou mplayer");
+                break;
+        }
+        return $service;
     }
     private function checkVlc() {
         $msg = shell_exec('cvlc --version');
