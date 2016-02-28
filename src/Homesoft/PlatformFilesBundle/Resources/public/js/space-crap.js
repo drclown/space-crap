@@ -32,7 +32,12 @@ function createTreeFiles(path){
                 "icon": "fa fa-file-o"
             }
         },
-        "plugins" : [ "types" ]
+            "search": {
+
+            "case_insensitive": true,
+                "show_only_matches" : true
+        },
+        "plugins" : [ "types", "search" ]
     })
     .bind("select_node.jstree", function(evt, data){
         if(data.node.type === "file-film") {

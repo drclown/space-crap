@@ -6,9 +6,13 @@ namespace Homesoft\PlatformFilesBundle\services;
 class OmxReader {
     public function play($file) {
         $commande = 'omxplayer -o hdmi --blank '.$file;
-        echo $commande;
         $this->stop();
         $msg = shell_exec($commande);
+        sleep(1);
+        return $msg;
+    }
+    public function getPid(){
+        $msg = exec("pgrep omxplayer.bin");
         sleep(1);
         return $msg;
     }

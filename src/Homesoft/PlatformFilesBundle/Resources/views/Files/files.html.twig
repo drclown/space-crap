@@ -1,23 +1,24 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    <div class="container-fluid">
+<div class="row">
+    <div class="col-lg-5">
         <div class="row">
-            <div class="col-lg-5" style="overflow-y: auto; overflow-x: none; border: solid 1px lightblue; height: 550px;">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div id="tree-files"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-7">
-                <div id="menu-video" style="display:none;">
-                    <button id="play-stop" class="btn btn-danger fa fa-stop"></button>
-                    <button id="play-video" class="btn btn-success fa fa-play"></button>
-                </div>
+            <input type="text" id="search-files" class="form-control" />
+        </div>
+        <div class="row" style="margin-top: 5px;">
+            <div class="col-lg-12" style="overflow-y: auto; overflow-x: none; border: solid 1px lightblue; height: 550px;">
+                <div id="tree-files"></div>
             </div>
         </div>
     </div>
+    <div class="col-lg-7">
+        <div id="menu-video" style="display:none;">
+            <button id="play-stop" class="btn btn-danger fa fa-stop"></button>
+            <button id="play-video" class="btn btn-success fa fa-play"></button>
+        </div>
+    </div>
+</div>
 
 <script>
 $( document ).ready(function() {
@@ -35,6 +36,11 @@ $( document ).ready(function() {
         $.ajax({
             url: Routing.generate("homesoft_platform_files_stop_file")
         });
+    });
+    $("#search-files").keyup(function() {
+        var searchString = $(this).val();
+        console.log(searchString);
+        $('#tree-files').jstree('search', searchString);
     });
 });
 
