@@ -7,7 +7,11 @@ class OmxReader {
     public function play($file) {
         $this->createFifo();
         $cmd = 'omxplayer -o hdmi --blank '.$file." < /tmp/cmd";
-        $this->stop();
+
+        //$this->stop();
+
+        shell_exec($cmd);
+        $cmd = "echo . > /tmp/cmd";
         $msg = shell_exec($cmd);
         sleep(1);
         return $msg;
@@ -34,7 +38,7 @@ class OmxReader {
 
     }
     public function pause() {
-        $msg = shell_exec('echo -n p > /tmp/cmd');
+        $msg = shell_exec('echo -n p > /tmp/cmd-omxplayer');
         sleep(1);
         return $msg;
     }
