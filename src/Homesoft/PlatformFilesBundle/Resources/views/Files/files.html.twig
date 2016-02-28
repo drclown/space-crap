@@ -1,60 +1,82 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    <div id="tree-files"></div>
-    <button id="play-stop" class="btn btn-danger fa fa-stop"></button>
-    <button id="play-video" class="btn btn-success fa fa-play"></button>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-5" style="overflow-y: auto; overflow-x: none; border: solid 1px lightblue; height: 550px;">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div id="tree-files"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div id="menu-video" style="display:none;">
+                    <button id="play-stop" class="btn btn-danger fa fa-stop"></button>
+                    <button id="play-video" class="btn btn-success fa fa-play"></button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 <script>
 
-    $('#tree-files')
-    .jstree({
-        'core' : {
-            'data' : {
-                'url' : Routing.generate('homesoft_platform_files_get_files', { pathRemote: 'media' })
-            },
-            "themes" : {
-                "variant" : "large"
-            }
+$('#tree-files')
+.jstree({
+    'core' : {
+        'data' : {
+            'url' : Routing.generate('homesoft_platform_files_get_files', { pathRemote: 'media' })
         },
-        "types" : {
-            "dir" : {
-                "icon" : "fa fa-folder-o"
-            },
-            "file-film" : {
-                "icon" : "fa fa-film"
-            },
-            "file-video" : {
-                "icon" : "fa fa-file-movie-o"
-            },
-            "file-image" : {
-                "icon" : "fa fa-file-image-o"
-            },
-            "file-sound" : {
-                "icon" : "fa fa-file-audio-o"
-            },
-            "file": {
-                "icon": "fa fa-file-o"
-            }
+        "themes" : {
+            "variant" : "large"
+        }
+    },
+    "types" : {
+        "dir" : {
+            "icon" : "fa fa-folder-o"
         },
-        "plugins" : [ "types" ]
-    })
-    .bind("select_node.jstree", function(evt, data){
+        "file-film" : {
+            "icon" : "fa fa-film"
+        },
+        "file-video" : {
+            "icon" : "fa fa-file-movie-o"
+        },
+        "file-image" : {
+            "icon" : "fa fa-file-image-o"
+        },
+        "file-sound" : {
+            "icon" : "fa fa-file-audio-o"
+        },
+        "file": {
+            "icon": "fa fa-file-o"
+        }
+    },
+    "plugins" : [ "types" ]
+})
+.bind("select_node.jstree", function(evt, data){
+    if(data.node.type === "file-film") {
+        $("#menu-video").show();
         $("#play-video").val(data.node.id);
+    }
+    else {
+        $("#menu-video").hide();
+        $("#play-video").val("");
+    }
+});
+$("#play-video").on("click", function() {
+    console.log($(this).val());
+    var pathVideo = $(this).val();
+    $.ajax({
+        type: "POST",
+        data: {pathFile: pathVideo},
+        url: Routing.generate("homesoft_platform_files_play_file")
     });
-    $("#play-video").on("click", function() {
-        console.log($(this).val());
-        var pathVideo = $(this).val();
-        $.ajax({
-            type: "POST",
-            data: {pathFile: pathVideo},
-            url: Routing.generate("homesoft_platform_files_play_file")
-        });
+});
+$("#play-stop").on("click", function() {
+    $.ajax({
+        url: Routing.generate("homesoft_platform_files_stop_file")
     });
-    $("#play-stop").on("click", function() {
-        $.ajax({
-            url: Routing.generate("homesoft_platform_files_stop_file")
-        });
-    });
+});
+
 </script>
 {% endblock %}

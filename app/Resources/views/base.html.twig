@@ -19,15 +19,13 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        <div class="container-fluid">
-            <nav>
-                {% include "nav.html.twig" %}
-            </nav>
-            <div id="content" class="row">
-                {% block body %}
+        <nav>
+            {% include "nav.html.twig" %}
+        </nav>
+        <div id="content" class="row">
+            {% block body %}
 
-                {% endblock %}
-            </div>
+            {% endblock %}
         </div>
     </body>
 </html>

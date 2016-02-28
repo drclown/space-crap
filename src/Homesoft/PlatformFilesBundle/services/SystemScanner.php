@@ -23,7 +23,6 @@ class SystemScanner {
             $this->setMediaPlayer("cvlc");
         }
         if($this->checkOmxplayer()){
-            echo "yeah";
             $this->setMediaPlayer("omxplayer");
         }
     }
@@ -36,7 +35,7 @@ class SystemScanner {
     }
     private function checkOmxplayer(){
         $msg = shell_exec('omxplayer -v');
-        if($msg === "omxplayer -v : commande introuvable") {
+        if($msg === null) {
             return false;
         }
         return true;

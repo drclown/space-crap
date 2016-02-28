@@ -5,9 +5,9 @@ namespace Homesoft\PlatformFilesBundle\services;
 
 class VlcReader {
     public function play($file) {
-        $msg = exec('cvlc '.$file);
-        echo $msg;
-        //sleep(1);
+        $commande = "mplayer ".$file;
+        echo $commande."<br />";
+        $msg = system($commande);
         return $msg;
     }
     public function stop() {

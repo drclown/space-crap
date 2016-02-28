@@ -6,11 +6,12 @@ namespace Homesoft\PlatformFilesBundle\services;
 class OmxReader {
     public function play($file) {
 
-        shell_exec('omxplayer '.$file);
+        $msg = shell_exec('omxplayer '.$file);
         sleep(1);
+        return $msg;
     }
     public function stop() {
-        shell_exec('killall -9 omxplayer');
+        shell_exec('killall omxplayer.bin');
         sleep(1);
     }
     public function pause($file){

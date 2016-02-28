@@ -49,15 +49,14 @@ class FilesController extends Controller {
         switch($system->getMediaPlayer()) {
             case "omxplayer":
                 $service = "omx_reader";
-            break;
+                break;
             case "cvlc":
                 $service = "vlc_reader";
-            break;
+                break;
             case "":
                 return new response("Vous n'avez aucun lecteur video compatible avec ce fichier ! Installez omxplayer ou vlc");
-            break;
+                break;
         }
-
         $mediaService = $this->container->get('homesoft_platform_files.'.$service);
         return new Response($mediaService->play($pathFile));
     }
