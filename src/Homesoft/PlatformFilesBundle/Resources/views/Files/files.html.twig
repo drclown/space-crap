@@ -17,6 +17,11 @@
             <button id="play-video" class="btn btn-success fa fa-play"></button>
             <button id="play-pause" class="btn btn-info fa fa-pause"></button>
             <button id="play-stop" class="btn btn-danger fa fa-stop"></button>
+            <button id="increase-volume" class="btn btn-info fa fa-plus"></button>
+            <button id="decrease-volume" class="btn btn-info fa fa-minus"></button>
+            <button id="backward" class="btn btn-info fa fa-backward"></button>
+            <button id="forward" class="btn btn-info fa fa-forward"></button>
+            <button id="load-subtitle" class="btn btn-info fa fa-language"></button>
         </div>
     </div>
 </div>
@@ -24,20 +29,50 @@
 <script>
 $( document ).ready(function() {
     createTreeFiles("/media");
+
     $("#play-video").on("click", function() {
         console.log($(this).val());
         var pathVideo = $(this).val();
+
+        $.ajax({
+            type: "POST",
+            data: {pathFile: pathVideo},
+            url: Routing.generate("homesoft_platform_files_link_file")
+        });
+
         $.ajax({
             type: "POST",
             data: {pathFile: pathVideo},
             url: Routing.generate("homesoft_platform_files_play_file")
         });
     });
+
     $("#play-stop").on("click", function() {
         $.ajax({
             url: Routing.generate("homesoft_platform_files_stop_file")
         });
     });
+
+    $("#increase-volume").on("click", function() {
+        $.ajax({url: Routing.generate("homesoft_platform_files_increase_volume")});
+    });
+
+    $("#decrease-volume").on("click", function() {
+        $.ajax({url: Routing.generate("homesoft_platform_files_decrease_volume")});
+    });
+
+    $("#forward").on("click", function() {
+        $.ajax({url: Routing.generate("homesoft_platform_files_forward")});
+    });
+
+    $("#rewind").on("click", function() {
+        $.ajax({url: Routing.generate("homesoft_platform_files_rewind")});
+    });
+
+    $("#load-subtitle").on("click", function() {
+        $.ajax({url: Routing.generate("homesoft_platform_files_load_subtitle")});
+    });
+
     $("#play-pause").on("click", function() {
         $.ajax({
             url: Routing.generate("homesoft_platform_files_pause_file")

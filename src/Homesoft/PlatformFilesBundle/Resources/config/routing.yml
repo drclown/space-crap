@@ -29,3 +29,39 @@ homesoft_platform_files_pause_file:
     defaults: { _controller: HomesoftPlatformFilesBundle:Files:pauseFile }
     options:
         expose: true
+
+homesoft_platform_files_link_file:
+    path: /link-file
+    defaults: { _controller: HomesoftPlatformFilesBundle:Files:linkFile }
+    options:
+        expose: true
+
+homesoft_platform_files_decrease_volume:
+    path: /decrease-volume
+    defaults: { _controller: HomesoftPlatformFilesBundle:Files:decreaseVolumeFile }
+    options:
+        expose: true
+
+homesoft_platform_files_increase_volume:
+    path: /increase-volume
+    defaults: { _controller: HomesoftPlatformFilesBundle:Files:increaseVolumeFile  }
+    options:
+        expose: true
+
+homesoft_platform_files_rewind:
+    path: /rewind-video
+    defaults: { _controller: HomesoftPlatformFilesBundle:Files:rewindFile  }
+    options:
+        expose: true
+
+homesoft_platform_files_forward:
+    path: /forward-video
+    defaults: { _controller: HomesoftPlatformFilesBundle:Files:forwardFile  }
+    options:
+        expose: true
+
+homesoft_platform_files_load_subtitle:
+    path: /load-subtitle
+    defaults: { _controller: HomesoftPlatformFilesBundle:Files:loadSubtitleFile  }
+    options:
+        expose: true

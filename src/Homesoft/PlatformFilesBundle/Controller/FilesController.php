@@ -45,6 +45,15 @@ class FilesController extends Controller {
         return new Response($mediaService->play($pathFile));
     }
 
+    public function linkFileAction(Request $request) {
+        $systemScanner = new SystemScanner();
+        //$service = $systemScanner->getVideoService();
+        $pathFile = $this->formatPathFile($request->request->get("pathFile"));
+        $service = "omx_reader";
+        $mediaService = $this->container->get('homesoft_platform_files.'.$service);
+        return new Response($mediaService->link($pathFile));
+    }
+
     public function pauseFileAction(){
         $systemScanner = new SystemScanner();
         //$service = $systemScanner->getVideoService();
@@ -57,18 +66,27 @@ class FilesController extends Controller {
         $omxService = $this->container->get('homesoft_platform_files.omx_reader');
         return new Response($omxService->stop());
     }
+
     public function rewindFileAction() {
         $omxService = $this->container->get('homesoft_platform_files.omx_reader');
         return new Response($omxService->rewind());
     }
-    public function advanceFileAction() {
+
+    public function forwardFileAction() {
         $omxService = $this->container->get('homesoft_platform_files.omx_reader');
-        return new Response($omxService->advance());
+        return new Response($omxService->forward());
     }
+
+    public function loadSubtitleFileAction() {
+        $omxService = $this->container->get('homesoft_platform_files.omx_reader');
+        return new Response($omxService->loadSubtitle());
+    }
+
     public function increaseVolumeFileAction() {
         $omxService = $this->container->get('homesoft_platform_files.omx_reader');
         return new Response($omxService->increaseVolume());
     }
+
     public function decreaseVolumeFileAction() {
         $omxService = $this->container->get('homesoft_platform_files.omx_reader');
         return new Response($omxService->decreaseVolume());

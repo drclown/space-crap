@@ -4,65 +4,78 @@ namespace Homesoft\PlatformFilesBundle\services;
 
 
 class OmxReader {
-    public function play($file) {
+
+    public function link($file) {
+        if($this->fifoExist()){
+            $this->removeFifo();
+        }
         $this->createFifo();
-<<<<<<< HEAD
-        $cmd = 'omxplayer -o hdmi --blank '.$file." < /tmp/cmd-omxplayer";
-=======
-        $cmd = 'omxplayer -o hdmi --blank '.$file." < /tmp/cmd";
->>>>>>> 26f9a8e7eb545ee8657103c1535fc2fc81128770
+        $cmd = 'omxplayer -o hdmi --blank ' . $file . " < /tmp/cmd-omxplayer";
+        $msg = shell_exec($cmd);
+        sleep(1);
+        return $msg;
+    }
 
-        //$this->stop();
-
-        shell_exec($cmd);
-<<<<<<< HEAD
+    public function play() {
+        sleep(5);
         $cmd = "echo . > /tmp/cmd-omxplayer";
-=======
-        $cmd = "echo . > /tmp/cmd";
->>>>>>> 26f9a8e7eb545ee8657103c1535fc2fc81128770
         $msg = shell_exec($cmd);
         sleep(1);
         return $msg;
     }
-    public function createFifo(){
-        $cmd = 'mkfifo /tmp/cmd-omxplayer';
-        $msg = shell_exec($cmd);
-        sleep(1);
-        return $msg;
-    }
-    public function removeFifo(){
-        $cmd = 'rm /tmp/cmd-omxplayer';
+
+    public function rewind() {
+        $cmd = "echo -n $'\x5b\x44' > /tmp/cmd-omxplayer";
         $msg = shell_exec($cmd);
         sleep(1);
         return $msg;
     }
     public function stop() {
-        $msg = shell_exec('echo -n q > /tmp/cmd-omxplayer');
-        $this->removeFifo();
+        $cmd = "echo -n q > /tmp/cmd-omxplayer";
+        $msg = shell_exec($cmd);
         sleep(1);
         return $msg;
     }
-    public function getInstance(){
 
-    }
-    public function pause() {
-        $msg = shell_exec('echo -n p > /tmp/cmd-omxplayer');
+    public function loadSubtitle() {
+        $msg = shell_exec('echo -n s > /tmp/cmd-omxplayer');
         sleep(1);
         return $msg;
     }
-    public function rewind($file){
-        /* Quand t'auras trouvé gros se sera cool */
+    public function forward() {
+        $cmd = "echo -n $'\x5b\x43' > /tmp/cmd-omxplayer";
+        $msg = shell_exec($cmd);
         sleep(1);
+        return $msg;
     }
-    public function advance($file){
+    public function increaseVolume() {
+        $msg = shell_exec('echo -n + > /tmp/cmd-omxplayer');
         sleep(1);
+        return $msg;
     }
-    public function increaseVolume($file){
-        /* Quand t'auras trouvé gros se sera cool */
+    public function decreaseVolume() {
+        $msg = shell_exec('echo -n - > /tmp/cmd-omxplayer');
         sleep(1);
+        return $msg;
     }
-    public function decreaseVolume($file){
-        /* Quand t'auras trouvé gros se sera cool */
+
+    public function fifoExist() {
+        if(file_exists("/tmp/cmd-omxplayer")) {
+            return true;
+        }
+        return false;
+    }
+
+    public function createFifo() {
+        $cmd = 'mkfifo /tmp/cmd-omxplayer';
+        $msg = shell_exec($cmd);
         sleep(1);
+        return $msg;
+    }
+    public function removeFifo() {
+        $cmd = 'rm /tmp/cmd-omxplayer';
+        $msg = shell_exec($cmd);
+        sleep(1);
+        return $msg;
     }
 }
