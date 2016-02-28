@@ -23,3 +23,9 @@ homesoft_platform_files_stop_file:
     defaults: { _controller: HomesoftPlatformFilesBundle:Files:stopFile }
     options:
         expose: true
+
+homesoft_platform_files_pause_file:
+    path: /pause-file
+    defaults: { _controller: HomesoftPlatformFilesBundle:Files:pauseFile }
+    options:
+        expose: true

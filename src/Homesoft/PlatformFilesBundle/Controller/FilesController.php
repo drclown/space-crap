@@ -45,10 +45,12 @@ class FilesController extends Controller {
         return new Response($mediaService->play($pathFile));
     }
 
-    public function pauseFileAction(Request $request){
-        $pathFile = $this->formatPathFile($request->request->get("pathFile"));
-        $omxService = $this->container->get('homesoft_platform_files.omx_reader');
-        return new Response($omxService->pause($pathFile));
+    public function pauseFileAction(){
+        $systemScanner = new SystemScanner();
+        //$service = $systemScanner->getVideoService();
+        $service = "omx_reader";
+        $mediaService = $this->container->get('homesoft_platform_files.'.$service);
+        return new Response($mediaService->pause());
     }
 
     public function stopFileAction() {

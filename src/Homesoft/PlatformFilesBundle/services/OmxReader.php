@@ -5,27 +5,38 @@ namespace Homesoft\PlatformFilesBundle\services;
 
 class OmxReader {
     public function play($file) {
-        $commande = 'omxplayer -o hdmi --blank '.$file;
+        $this->createFifo();
+        $cmd = 'omxplayer -o hdmi --blank '.$file." < /tmp/cmd";
         $this->stop();
-        $msg = shell_exec($commande);
+        $msg = shell_exec($cmd);
         sleep(1);
         return $msg;
     }
-    public function getPid(){
-        $msg = exec("pgrep omxplayer.bin");
+    public function createFifo(){
+        $cmd = 'mkfifo /tmp/cmd-omxplayer';
+        $msg = shell_exec($cmd);
+        sleep(1);
+        return $msg;
+    }
+    public function removeFifo(){
+        $cmd = 'rm /tmp/cmd-omxplayer';
+        $msg = shell_exec($cmd);
         sleep(1);
         return $msg;
     }
     public function stop() {
-        shell_exec('killall omxplayer.bin');
+        $msg = shell_exec('echo -n q > /tmp/cmd-omxplayer');
+        $this->removeFifo();
         sleep(1);
+        return $msg;
     }
     public function getInstance(){
 
     }
-    public function pause($file){
-        /* Quand t'auras trouvé gros se sera cool */
+    public function pause() {
+        $msg = shell_exec('echo -n p > /tmp/cmd');
         sleep(1);
+        return $msg;
     }
     public function rewind($file){
         /* Quand t'auras trouvé gros se sera cool */
