@@ -8,7 +8,7 @@ use Symfony\Component\Finder\Finder;
 
 class RemoteScanner {
     private $pathRemote;
-    private $videoExtensions = ["mp4", "avi"];
+    private $videoExtensions = ["mp4", "avi", "mkv", "wmv", "divx", "flv"];
     private $imageExtensions = ["jpeg", "jpg", "png", "gif"];
     private $audioExtensions = ["mp3"];
     private $textExtensions = ["txt"];
