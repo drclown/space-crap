@@ -6,6 +6,7 @@ namespace Homesoft\PlatformFilesBundle\services;
 class OmxReader {
     public function play($file) {
         $commande = 'omxplayer -o hdmi --blank '.$file;
+        echo $commande;
         $this->stop();
         $msg = shell_exec($commande);
         sleep(1);

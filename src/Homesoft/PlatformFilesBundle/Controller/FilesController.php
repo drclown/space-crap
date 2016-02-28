@@ -30,7 +30,9 @@ class FilesController extends Controller {
     }
 
     public function formatPathFile($pathFile) {
-        return str_replace(' ','\\ ', $pathFile);
+        $pathFile = str_replace(' ','\\ ', $pathFile);
+        $pathFile = str_replace(')','\\)', $pathFile);
+        return  str_replace('(','\\(', $pathFile);
     }
 
     //  Execute la video aprés avoir determiné quel est le lecteur video installé
