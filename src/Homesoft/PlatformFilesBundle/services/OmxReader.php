@@ -6,12 +6,12 @@ namespace Homesoft\PlatformFilesBundle\services;
 class OmxReader {
     public function play($file) {
         $this->createFifo();
-        $cmd = 'omxplayer -o hdmi --blank '.$file." < /tmp/cmd";
+        $cmd = 'omxplayer -o hdmi --blank '.$file." < /tmp/cmd-omxplayer";
 
         //$this->stop();
 
         shell_exec($cmd);
-        $cmd = "echo . > /tmp/cmd";
+        $cmd = "echo . > /tmp/cmd-omxplayer";
         $msg = shell_exec($cmd);
         sleep(1);
         return $msg;
