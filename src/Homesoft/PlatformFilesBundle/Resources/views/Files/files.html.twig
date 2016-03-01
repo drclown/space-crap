@@ -2,6 +2,9 @@
 
 {% block body %}
 <div class="row">
+    <div
+</div>
+<div class="row">
     <div class="col-lg-5">
         <div class="row">
             <input type="text" id="search-files" class="form-control" />
@@ -13,15 +16,27 @@
         </div>
     </div>
     <div class="col-lg-7">
-        <div id="menu-video" style="display:none;">
-            <button id="play-video" class="btn btn-success fa fa-play"></button>
-            <button id="play-pause" class="btn btn-info fa fa-pause"></button>
-            <button id="play-stop" class="btn btn-danger fa fa-stop"></button>
-            <button id="increase-volume" class="btn btn-info fa fa-plus"></button>
-            <button id="decrease-volume" class="btn btn-info fa fa-minus"></button>
-            <button id="backward" class="btn btn-info fa fa-backward"></button>
-            <button id="forward" class="btn btn-info fa fa-forward"></button>
-            <button id="load-subtitle" class="btn btn-info fa fa-language"></button>
+        <div id="menu-video">
+            <div class="row">
+                <div class="col-lg-1">
+                    <div class="btn-group-vertical">
+                        <a id="increase-volume" class="btn btn-default btn-lg" href="#"><span class="fa fa-plus"></span>&nbsp;</a>
+                        <a id="load-subtitle" class="btn btn-default btn-lg" href="#"><span class="fa fa-language"></span>&nbsp;</a>
+                        <a id="decrease-volume" class="btn btn-default btn-lg" href="#"><span class="fa fa-minus"></span>&nbsp;</a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="btn-group">
+                        <a id="fast-backward" class="btn btn-warning btn-lg" href="#"><span class="fa fa-fast-backward"></span>&nbsp;</a>
+                        <a id="backward" class="btn btn-info btn-lg" href="#"><span class="fa fa-backward"></span>&nbsp;</a>
+                        <a id="play" class="btn btn-success btn-lg" href="#"><span class="fa fa-play"></span>&nbsp;</a>
+                        <a id="pause" class="btn btn-info btn-lg" href="#"><span class="fa fa-pause"></span>&nbsp;</a>
+                        <a id="stop" class="btn btn-danger btn-lg" href="#"><span class="fa fa-stop"></span>&nbsp;</a>
+                        <a id="forward" class="btn btn-info btn-lg" href="#"><span class="fa fa-forward"></span>&nbsp;</a>
+                        <a id="fast-forward" class="btn btn-warning btn-lg" href="#"><span class="fa fa-fast-forward"></span>&nbsp;</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -30,7 +45,7 @@
 $( document ).ready(function() {
     createTreeFiles("/media");
 
-    $("#play-video").on("click", function() {
+    $("#play").on("click", function() {
         console.log($(this).val());
         var pathVideo = $(this).val();
 
@@ -47,7 +62,7 @@ $( document ).ready(function() {
         });
     });
 
-    $("#play-stop").on("click", function() {
+    $("#stop").on("click", function() {
         $.ajax({
             url: Routing.generate("homesoft_platform_files_stop_file")
         });
@@ -73,7 +88,7 @@ $( document ).ready(function() {
         $.ajax({url: Routing.generate("homesoft_platform_files_load_subtitle")});
     });
 
-    $("#play-pause").on("click", function() {
+    $("#pause").on("click", function() {
         $.ajax({
             url: Routing.generate("homesoft_platform_files_pause_file")
         });

@@ -41,12 +41,10 @@ function createTreeFiles(path){
     })
     .bind("select_node.jstree", function(evt, data){
         if(data.node.type === "file-film") {
-            $("#menu-video").show();
-            $("#play-video").val(data.node.id);
+            $("#play").val(data.node.id);
         }
         else {
-            $("#menu-video").hide();
-            $("#play-video").val("");
+            $("#play").val("");
         }
     });
 }
