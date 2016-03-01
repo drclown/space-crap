@@ -1,14 +1,35 @@
-<nav id="nav-space-crap" class="navbar navbar-inverse">
+<nav id="nav-space-crap" class="navbar navbar-default">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header active">
+        <a id="/media" class="navbar-brand load-tree" href="#">/media</a>
+    </div>
     <ul class="nav navbar-nav">
         {% for remote in remotes %}
-            <li><a href="#">{{ remote.getRealpath }}</a></li>
+            {% if remote.directories | length == 0 %}
+                <li>
+                    <a href="#" id="{{ remote.path }}" class="load-tree">{{ remote.path.getBasename }}</a>
+                </li>
+            {% else %}
+            <li class="dropdown">
+                <a href="#" id="{{ remote.path }}"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    {{ remote.path.getBasename }}
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    {% for directory in remote.directories  %}
+                        <li><a class="load-tree" id="{{ directory }}" href="#">{{ directory.getBasename }}</a></li>
+                    {% endfor %}
+                </ul>
+            </li>
+            {% endif %}
         {% endfor %}
     </ul>
 </nav>
 <script>
 $( document ).ready(function() {
-    $("#nav-space-crap ul li").on("click", function () {
-        var pathRemote = $(this).find("a").html();
+    $("a.load-tree").on("click", function () {
+        var pathRemote = $(this).attr("id");
+        console.log(pathRemote);
         createTreeFiles(pathRemote);
     });
 });

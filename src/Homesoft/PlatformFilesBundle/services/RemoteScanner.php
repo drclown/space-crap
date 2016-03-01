@@ -1,14 +1,16 @@
 <?php
 
 namespace Homesoft\PlatformFilesBundle\services\RemoteScanner;
+
 namespace Homesoft\PlatformFilesBundle\services;
 
 use Symfony\Component\Finder\Finder;
-
+use Homesoft\PlatformFilesBundle\services\Remote;
 
 class RemoteScanner {
     private $pathRemote;
     private $videoExtensions = ["mp4", "avi", "mkv", "wmv", "divx", "flv"];
+    private $listDirectoriesToCheck = ["film", "films", "serie", "series", "reportages", "reportage", "musiques", "musique"];
     private $imageExtensions = ["jpeg", "jpg", "png", "gif"];
     private $audioExtensions = ["mp3"];
     private $textExtensions = ["txt"];
@@ -18,24 +20,34 @@ class RemoteScanner {
         $this->setPathRemote($path);
     }
 
-    /* Retourne les dossiers trouvés dans $this->pathRemote */
+    /* Retourne les dossiers trouvés dans $this->pathRemote sous la forme d'un tableau de remotes */
     public function scanRemotes() {
+        $arrayRemotes = array();
         $finder = new Finder();
         $remotes = $finder
             ->directories()
             ->depth(0)
             ->in($this->pathRemote)
         ;
-        return $remotes;
+        //print_r($remotes);
+        foreach($remotes AS $path) {
+            $arrayRemotes[] = new Remote($path);
+        }
+        return $arrayRemotes;
     }
 
-    public function scanRemoteFiles($path){
-        $finder = new Finder();
-        $files = $finder
-            ->directories()
-            ->in($path)
-        ;
-        return $files;
+    public function findSeriesFilmsPaths($remotes) {
+        foreach($remotes AS $remote){
+            $path = $remote->getPath();
+            foreach($this->listDirectoriesToCheck AS $directoryToCheck){
+                $finder = new Finder();
+                foreach($finder->in("$path")->name("$directoryToCheck") AS $directory) {
+                    $remote->addDirectory($directory);
+                }
+
+            }
+        }
+        return $remotes;
     }
 
     public function directoryExist($path) {

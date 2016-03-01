@@ -16,7 +16,10 @@ class FilesController extends Controller {
     public function indexAction() {
         $remoteScanner = new RemoteScanner("/media");
         $remotes = $remoteScanner->scanRemotes();
-        return $this->render('HomesoftPlatformFilesBundle:Files:files.html.twig', array("remotes"=>$remotes));
+        $remotes = $remoteScanner->findSeriesFilmsPaths($remotes);
+        return $this->render('HomesoftPlatformFilesBundle:Files:files.html.twig', array(
+            "remotes"   => $remotes
+        ));
     }
 
     // Retourne une reponse json de l'arborence Dossiers / Fichiers du chemin données

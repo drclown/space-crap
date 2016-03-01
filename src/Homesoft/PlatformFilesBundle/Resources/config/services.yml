@@ -7,3 +7,5 @@ services:
         class: Homesoft\PlatformFilesBundle\services\VlcReader
     homesoft_platform_files.system_scanner:
         class: Homesoft\PlatformFilesBundle\services\SystemScanner
+    homesoft_platform_files.remote:
+        class: Homesoft\PlatformFilesBundle\services\Remote
