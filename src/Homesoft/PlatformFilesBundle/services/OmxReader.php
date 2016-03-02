@@ -25,7 +25,7 @@ class OmxReader {
     }
 
     public function pause() {
-        $cmd = "echo p > /tmp/cmd-omxplayer";
+        $cmd = "echo -n p > /tmp/cmd-omxplayer";
         $msg = shell_exec($cmd);
         return $msg;
     }
