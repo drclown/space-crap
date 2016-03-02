@@ -24,6 +24,12 @@ class OmxReader {
         return $msg;
     }
 
+    public function pause() {
+        $cmd = "echo p > /tmp/cmd-omxplayer";
+        $msg = shell_exec($cmd);
+        return $msg;
+    }
+
     public function rewind() {
         $cmd = "echo -n $'\x5b\x44' > /tmp/cmd-omxplayer";
         $msg = shell_exec($cmd);
