@@ -1,5 +1,4 @@
 <nav id="nav-space-crap" class="navbar navbar-default">
-    <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header active">
         <a id="/media" class="navbar-brand load-tree" href="#">/media</a>
     </div>
@@ -11,13 +10,15 @@
                 </li>
             {% else %}
             <li class="dropdown">
-                <a href="#" id="{{ remote.path }}"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                    {{ remote.path.getBasename }}
+                <a href="#"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <span class="basename">{{ remote.path.getBasename }}</span>
                     <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
+                    <li><a class="load-tree" id="{{ remote.path }}" href="#"><span class="basename">{{ remote.path.getBasename }}</span></a></li>
+                    <li role="separator" class="divider"></li>
                     {% for directory in remote.directories  %}
-                        <li><a class="load-tree" id="{{ directory }}" href="#">{{ directory.getBasename }}</a></li>
+                        <li><a class="load-tree" id="{{ directory }}" href="#"><span class="basename">{{ directory.getBasename }}</span></a></li>
                     {% endfor %}
                 </ul>
             </li>
@@ -28,9 +29,11 @@
 <script>
 $( document ).ready(function() {
     $("a.load-tree").on("click", function () {
-        var pathRemote = $(this).attr("id");
-        console.log(pathRemote);
-        createTreeFiles(pathRemote);
+        var path = $(this).attr("id");
+        var name = $(this).find(".basename").html();
+        $("#path").text(path);
+        $("#path").attr("value", name);
+        createTreeFiles(path);
     });
 });
 </script>

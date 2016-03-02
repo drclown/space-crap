@@ -1,0 +1,75 @@
+<div id="menu-video">
+    <div class="col-lg-7">
+        <div class="btn-group">
+            <a id="fast-backward" class="btn btn-warning btn-lg" href="#"><span class="fa fa-fast-backward"></span>&nbsp;</a>
+            <a id="backward" class="btn btn-info btn-lg" href="#"><span class="fa fa-backward"></span>&nbsp;</a>
+            <a id="play" class="btn btn-success btn-lg" href="#"><span class="fa fa-play"></span>&nbsp;</a>
+            <a id="pause" class="btn btn-info btn-lg" href="#"><span class="fa fa-pause"></span>&nbsp;</a>
+            <a id="stop" class="btn btn-danger btn-lg" href="#"><span class="fa fa-stop"></span>&nbsp;</a>
+            <a id="forward" class="btn btn-info btn-lg" href="#"><span class="fa fa-forward"></span>&nbsp;</a>
+            <a id="fast-forward" class="btn btn-warning btn-lg" href="#"><span class="fa fa-fast-forward"></span>&nbsp;</a>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="btn-group">
+            <a id="decrease-volume" class="btn btn-default btn-lg" href="#"><span class="fa fa-minus"></span>&nbsp;</a>
+            <a id="load-subtitle" class="btn btn-default btn-lg" href="#"><span class="fa fa-language"></span>&nbsp;</a>
+            <a id="increase-volume" class="btn btn-default btn-lg" href="#"><span class="fa fa-plus"></span>&nbsp;</a>
+        </div>
+    </div>
+</div>
+
+<script>
+
+$( document ).ready(function() {
+
+    $("#play").on("click", function() {
+    console.log($(this).val());
+    var pathVideo = $(this).val();
+
+    $.ajax({
+        type: "POST",
+        data: {pathFile: pathVideo},
+        url: Routing.generate("homesoft_platform_files_link_file")
+    });
+
+    $.ajax({
+        type: "POST",
+        data: {pathFile: pathVideo},
+        url: Routing.generate("homesoft_platform_files_play_file")
+        });
+    });
+
+    $("#stop").on("click", function() {
+        $.ajax({
+            url: Routing.generate("homesoft_platform_files_stop_file")
+        });
+    });
+
+    $("#increase-volume").on("click", function() {
+        $.ajax({url: Routing.generate("homesoft_platform_files_increase_volume")});
+    });
+
+    $("#decrease-volume").on("click", function() {
+        $.ajax({url: Routing.generate("homesoft_platform_files_decrease_volume")});
+    });
+
+    $("#forward").on("click", function() {
+        $.ajax({url: Routing.generate("homesoft_platform_files_forward")});
+    });
+
+    $("#rewind").on("click", function() {
+        $.ajax({url: Routing.generate("homesoft_platform_files_rewind")});
+    });
+
+    $("#load-subtitle").on("click", function() {
+        $.ajax({url: Routing.generate("homesoft_platform_files_load_subtitle")});
+    });
+
+    $("#pause").on("click", function() {
+        $.ajax({
+            url: Routing.generate("homesoft_platform_files_pause_file")
+        });
+    });
+});
+</script>
