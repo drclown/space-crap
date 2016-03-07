@@ -95,13 +95,18 @@ class FilesController extends Controller {
         return new Response($omxService->loadSubtitle());
     }
 
-    public function increaseVolumeFileAction() {
+    public function volumeUpFileAction() {
         $omxService = $this->container->get('homesoft_platform_files.omx_reader');
-        return new Response($omxService->increaseVolume());
+        return new Response($omxService->volumeUp());
     }
 
-    public function decreaseVolumeFileAction() {
+    public function volumeOffFileAction() {
         $omxService = $this->container->get('homesoft_platform_files.omx_reader');
-        return new Response($omxService->decreaseVolume());
+        return new Response($omxService->volumeOff());
+    }
+
+    public function volumeDownFileAction() {
+        $omxService = $this->container->get('homesoft_platform_files.omx_reader');
+        return new Response($omxService->volumeDown());
     }
 }

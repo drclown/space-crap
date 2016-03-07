@@ -44,14 +44,14 @@ class OmxReader {
     }
 
     public function forward() {
-        $cmd = 'echo -n $\'\x5b\x43\' > '.$this->fifoFile;
+        $cmd = 'echo -n ">" > '.$this->fifoFile;
         $msg = shell_exec($cmd);
         sleep(1);
         return $msg;
     }
 
     public function fastForward() {
-        $cmd = 'echo -n ">" > '.$this->fifoFile;
+        $cmd = 'echo -n  > '.$this->fifoFile;
         $msg = shell_exec($cmd);
         sleep(1);
         return $msg;
@@ -78,12 +78,18 @@ class OmxReader {
         return $msg;
     }
 
-    public function increaseVolume() {
+    public function volumeUp() {
         $msg = shell_exec('echo -n + > '.$this->fifoFile);
         sleep(1);
         return $msg;
     }
-    public function decreaseVolume() {
+
+    public function volumeDown() {
+        $msg = shell_exec('echo -n - > '.$this->fifoFile);
+        sleep(1);
+        return $msg;
+    }
+    public function volumeOff() {
         $msg = shell_exec('echo -n - > '.$this->fifoFile);
         sleep(1);
         return $msg;

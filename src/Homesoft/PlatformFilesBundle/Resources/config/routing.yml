@@ -36,15 +36,21 @@ homesoft_platform_files_link_file:
     options:
         expose: true
 
-homesoft_platform_files_decrease_volume:
-    path: /decrease-volume
-    defaults: { _controller: HomesoftPlatformFilesBundle:Files:decreaseVolumeFile }
+homesoft_platform_files_volume_down:
+    path: /volume-down
+    defaults: { _controller: HomesoftPlatformFilesBundle:Files:volumeDownFile }
     options:
         expose: true
 
-homesoft_platform_files_increase_volume:
-    path: /increase-volume
-    defaults: { _controller: HomesoftPlatformFilesBundle:Files:increaseVolumeFile  }
+homesoft_platform_files_volume_off:
+    path: /volume-off
+    defaults: { _controller: HomesoftPlatformFilesBundle:Files:volumeOffFile  }
+    options:
+        expose: true
+
+homesoft_platform_files_volume_up:
+    path: /volume-up
+    defaults: { _controller: HomesoftPlatformFilesBundle:Files:volumeUpFile  }
     options:
         expose: true
 
