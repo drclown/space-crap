@@ -70,14 +70,24 @@ class FilesController extends Controller {
         return new Response($omxService->stop());
     }
 
-    public function rewindFileAction() {
+    public function backwardFileAction() {
         $omxService = $this->container->get('homesoft_platform_files.omx_reader');
-        return new Response($omxService->rewind());
+        return new Response($omxService->backward());
+    }
+
+    public function fastBackwardFileAction() {
+        $omxService = $this->container->get('homesoft_platform_files.omx_reader');
+        return new Response($omxService->fastBackward());
     }
 
     public function forwardFileAction() {
         $omxService = $this->container->get('homesoft_platform_files.omx_reader');
         return new Response($omxService->forward());
+    }
+
+    public function fastForwardFileAction() {
+        $omxService = $this->container->get('homesoft_platform_files.omx_reader');
+        return new Response($omxService->fastForward());
     }
 
     public function loadSubtitleFileAction() {

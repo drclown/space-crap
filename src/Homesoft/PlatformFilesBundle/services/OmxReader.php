@@ -10,16 +10,14 @@ class OmxReader {
             $this->removeFifo();
         }
         $this->createFifo();
-        //$cmd = 'omxplayer -o hdmi --blank ' . $file . " < " . $this->fifoFile;
-        $cmd = 'mplayer -vo x11 -slave -input file='. $this->fifoFile.' '.$file;
-        echo $cmd;
+        $cmd = 'omxplayer -o hdmi --blank ' . $file . " < " . $this->fifoFile;
+        //$cmd = 'mplayer -vo x11 -slave -input file='. $this->fifoFile.' '.$file;
         $msg = shell_exec($cmd);
         sleep(1);
         return $msg;
     }
 
     public function play() {
-        sleep(5);
         $cmd = 'echo . > '.$this->fifoFile;
         $msg = shell_exec($cmd);
         sleep(1);
@@ -32,14 +30,43 @@ class OmxReader {
         return $msg;
     }
 
-    public function rewind() {
+    public function backward() {
         $cmd = 'echo -n $\'\x5b\x44\' > '.$this->fifoFile;
         $msg = shell_exec($cmd);
         sleep(1);
         return $msg;
     }
+    public function fastBackward() {
+        $cmd = 'echo -n "<" > '.$this->fifoFile;
+        $msg = shell_exec($cmd);
+        sleep(1);
+        return $msg;
+    }
+
+    public function forward() {
+        $cmd = 'echo -n $\'\x5b\x43\' > '.$this->fifoFile;
+        $msg = shell_exec($cmd);
+        sleep(1);
+        return $msg;
+    }
+
+    public function fastForward() {
+        $cmd = 'echo -n ">" > '.$this->fifoFile;
+        $msg = shell_exec($cmd);
+        sleep(1);
+        return $msg;
+    }
+
     public function stop() {
         $cmd = 'echo -n q > '.$this->fifoFile;
+        $msg = shell_exec($cmd);
+        sleep(1);
+        $this->kill();
+        return $msg;
+    }
+
+    public function kill() {
+        $cmd = 'killall omxplayer.bin';
         $msg = shell_exec($cmd);
         sleep(1);
         return $msg;
@@ -50,12 +77,7 @@ class OmxReader {
         sleep(1);
         return $msg;
     }
-    public function forward() {
-        $cmd = 'echo -n $\'\x5b\x43\' > '.$this->fifoFile;
-        $msg = shell_exec($cmd);
-        sleep(1);
-        return $msg;
-    }
+
     public function increaseVolume() {
         $msg = shell_exec('echo -n + > '.$this->fifoFile);
         sleep(1);

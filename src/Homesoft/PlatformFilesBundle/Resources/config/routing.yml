@@ -48,15 +48,27 @@ homesoft_platform_files_increase_volume:
     options:
         expose: true
 
-homesoft_platform_files_rewind:
-    path: /rewind-video
-    defaults: { _controller: HomesoftPlatformFilesBundle:Files:rewindFile  }
+homesoft_platform_files_backward:
+    path: /backward-video
+    defaults: { _controller: HomesoftPlatformFilesBundle:Files:backwardFile  }
     options:
         expose: true
 
 homesoft_platform_files_forward:
     path: /forward-video
     defaults: { _controller: HomesoftPlatformFilesBundle:Files:forwardFile  }
+    options:
+        expose: true
+
+homesoft_platform_files_fast_backward:
+    path: /fast-backward-video
+    defaults: { _controller: HomesoftPlatformFilesBundle:Files:fastBackwardFile  }
+    options:
+        expose: true
+
+homesoft_platform_files_fast_forward:
+    path: /fast-forward-video
+    defaults: { _controller: HomesoftPlatformFilesBundle:Files:fastForwardFile  }
     options:
         expose: true
 

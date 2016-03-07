@@ -24,26 +24,24 @@
 $( document ).ready(function() {
 
     $("#play").on("click", function() {
-    console.log($(this).val());
-    var pathVideo = $(this).val();
+        console.log($(this).val());
+        var pathVideo = $(this).val();
 
-    $.ajax({
-        type: "POST",
-        data: {pathFile: pathVideo},
-        url: Routing.generate("homesoft_platform_files_link_file")
-    });
+        $.ajax({
+            type: "POST",
+            data: {pathFile: pathVideo},
+            url: Routing.generate("homesoft_platform_files_link_file")
+        });
 
-    $.ajax({
-        type: "POST",
-        data: {pathFile: pathVideo},
-        url: Routing.generate("homesoft_platform_files_play_file")
+        $.ajax({
+            type: "POST",
+            data: {pathFile: pathVideo},
+            url: Routing.generate("homesoft_platform_files_play_file")
         });
     });
 
     $("#stop").on("click", function() {
-        $.ajax({
-            url: Routing.generate("homesoft_platform_files_stop_file")
-        });
+        $.ajax({url: Routing.generate("homesoft_platform_files_stop_file")});
     });
 
     $("#increase-volume").on("click", function() {
@@ -58,8 +56,16 @@ $( document ).ready(function() {
         $.ajax({url: Routing.generate("homesoft_platform_files_forward")});
     });
 
-    $("#rewind").on("click", function() {
-        $.ajax({url: Routing.generate("homesoft_platform_files_rewind")});
+    $("#fast-forward").on("click", function() {
+        $.ajax({url: Routing.generate("homesoft_platform_files_fast_forward")});
+    });
+
+    $("#backward").on("click", function() {
+        $.ajax({url: Routing.generate("homesoft_platform_files_backward")});
+    });
+
+    $("#fast-backward").on("click", function() {
+        $.ajax({url: Routing.generate("homesoft_platform_files_fast_backward")});
     });
 
     $("#load-subtitle").on("click", function() {
@@ -67,9 +73,7 @@ $( document ).ready(function() {
     });
 
     $("#pause").on("click", function() {
-        $.ajax({
-            url: Routing.generate("homesoft_platform_files_pause_file")
-        });
+        $.ajax({url: Routing.generate("homesoft_platform_files_pause_file")});
     });
 });
 </script>
