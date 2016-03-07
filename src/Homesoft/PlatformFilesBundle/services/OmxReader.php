@@ -18,6 +18,7 @@ class OmxReader {
     }
 
     public function play() {
+        sleep(3);
         $cmd = 'echo . > '.$this->fifoFile;
         $msg = shell_exec($cmd);
         sleep(1);
