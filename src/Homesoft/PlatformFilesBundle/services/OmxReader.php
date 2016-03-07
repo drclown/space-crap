@@ -32,11 +32,19 @@ class OmxReader {
     }
 
     public function backward() {
+        $cmd = 'echo -n "<" > '.$this->fifoFile;
+        $msg = shell_exec($cmd);
+        sleep(1);
+        return $msg;
+    }
+
+    public function stepBackward() {
         $cmd = 'echo -n $\'\x5b\x44\' > '.$this->fifoFile;
         $msg = shell_exec($cmd);
         sleep(1);
         return $msg;
     }
+
     public function fastBackward() {
         $cmd = 'echo -n "<" > '.$this->fifoFile;
         $msg = shell_exec($cmd);
@@ -52,7 +60,14 @@ class OmxReader {
     }
 
     public function fastForward() {
-        $cmd = 'echo -n  > '.$this->fifoFile;
+        $cmd = 'echo -n ">" > '.$this->fifoFile;
+        $msg = shell_exec($cmd);
+        sleep(1);
+        return $msg;
+    }
+
+    public function stepForward() {
+        $cmd = 'echo -n $\'\x1b\x5b\x43\' > '.$this->fifoFile;
         $msg = shell_exec($cmd);
         sleep(1);
         return $msg;
