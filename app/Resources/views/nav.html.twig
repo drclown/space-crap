@@ -25,6 +25,11 @@
             {% endif %}
         {% endfor %}
     </ul>
+    <div class="pull-right col-sm-1">
+        <a href="#" class="navbar-btn btn btn-default" id="refresh">
+            <span class="fa fa-refresh"></span>
+        </a>
+    </div>
 </nav>
 <script>
 $( document ).ready(function() {
@@ -33,6 +38,10 @@ $( document ).ready(function() {
         var name = $(this).find(".basename").html();
         $("#path").text(path);
         $("#path").attr("value", name);
+        createTreeFiles(path);
+    });
+    $("#refresh").on("click", function() {
+        var path = $("#path").html();
         createTreeFiles(path);
     });
 });

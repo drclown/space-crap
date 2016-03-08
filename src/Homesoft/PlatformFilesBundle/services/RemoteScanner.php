@@ -44,7 +44,6 @@ class RemoteScanner {
                 foreach($finder->in("$path")->name("$directoryToCheck") AS $directory) {
                     $remote->addDirectory($directory);
                 }
-
             }
         }
         return $remotes;
@@ -106,7 +105,6 @@ class RemoteScanner {
         return $DirectoriesAndFiles;
     }
 
-
     public function getParentPath($directory) {
         $parent = "#";
         if($directory->getRelativePath() !== "") {
@@ -121,7 +119,6 @@ class RemoteScanner {
                 unset($dirs[(count($dirs)-1)]);
                 $parent = implode("/", $dirs);
             }
-
         }
         return $parent;
     }

@@ -53,7 +53,7 @@ function createTreeFiles(path){
 
 function getTypeByParent(parent){
     var type = "";
-    switch(parent){
+    switch(parent.toLowerCase()){
         case "series":
         case "serie":
         case "tv":
@@ -71,11 +71,9 @@ function getTypeByParent(parent){
 
 function getParentNode(node) {
     var parent = node.parent;
-
     if(parent == "#") {
         parent = $("#path").html();
     }
-
     var part = parent.split("/");
     parent = part[part.length-1];
     return parent;
@@ -117,8 +115,4 @@ function getMediaInfos(media, type, language) {
             }
         });
     }
-}
-
-function formatFile(media){
-
 }
