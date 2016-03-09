@@ -33,21 +33,12 @@ class FilesController extends Controller {
     }
 
     public function formatPathFile($pathFile) {
-        $pathFile = str_replace(' ','\\ ', $pathFile);
-        $pathFile = str_replace(')','\\)', $pathFile);
-        return  str_replace('(','\\(', $pathFile);
+        $pathFile = str_replace(' ', '\\ ', $pathFile);
+        $pathFile = str_replace(')', '\\)', $pathFile);
+        return str_replace('(', '\\(', $pathFile);
     }
 
-    //  Execute la video aprés avoir determiné quel est le lecteur video installé
-    public function playFileAction(Request $request) {
-        $systemScanner = new SystemScanner();
-        $pathFile = $this->formatPathFile($request->request->get("pathFile"));
-        //$service = $systemScanner->getVideoService();
-        $service = "omx_reader";
-        $mediaService = $this->container->get('homesoft_platform_files.'.$service);
-        return new Response($mediaService->play($pathFile));
-    }
-
+    // Reli le fichier video au fichier fifo
     public function linkFileAction(Request $request) {
         $systemScanner = new SystemScanner();
         //$service = $systemScanner->getVideoService();
@@ -57,66 +48,14 @@ class FilesController extends Controller {
         return new Response($mediaService->link($pathFile));
     }
 
-    public function pauseFileAction(){
+    /*  Récupere le service de lecture video adequate (omxReader, vlcReader etc...)
+        puis executer une de ses methodes en fonction du parametre $cmd passer en GET */
+    public function cmdCtrlFileAction($cmdCtrlVideo) {
         $systemScanner = new SystemScanner();
         //$service = $systemScanner->getVideoService();
         $service = "omx_reader";
         $mediaService = $this->container->get('homesoft_platform_files.'.$service);
-        return new Response($mediaService->pause());
-    }
-
-    public function stopFileAction() {
-        $omxService = $this->container->get('homesoft_platform_files.omx_reader');
-        return new Response($omxService->stop());
-    }
-
-    public function backwardFileAction() {
-        $omxService = $this->container->get('homesoft_platform_files.omx_reader');
-        return new Response($omxService->backward());
-    }
-
-    public function stepBackwardFileAction() {
-        $omxService = $this->container->get('homesoft_platform_files.omx_reader');
-        return new Response($omxService->stepBackward());
-    }
-
-    public function fastBackwardFileAction() {
-        $omxService = $this->container->get('homesoft_platform_files.omx_reader');
-        return new Response($omxService->fastBackward());
-    }
-
-    public function forwardFileAction() {
-        $omxService = $this->container->get('homesoft_platform_files.omx_reader');
-        return new Response($omxService->forward());
-    }
-
-    public function fastForwardFileAction() {
-        $omxService = $this->container->get('homesoft_platform_files.omx_reader');
-        return new Response($omxService->fastForward());
-    }
-
-    public function stepForwardFileAction() {
-        $omxService = $this->container->get('homesoft_platform_files.omx_reader');
-        return new Response($omxService->stepForward());
-    }
-
-    public function loadSubtitleFileAction() {
-        $omxService = $this->container->get('homesoft_platform_files.omx_reader');
-        return new Response($omxService->loadSubtitle());
-    }
-
-    public function volumeUpFileAction() {
-        $omxService = $this->container->get('homesoft_platform_files.omx_reader');
-        return new Response($omxService->volumeUp());
-    }
-
-    public function volumeOffFileAction() {
-        $omxService = $this->container->get('homesoft_platform_files.omx_reader');
-        return new Response($omxService->volumeOff());
-    }
-
-    public function volumeDownFileAction() {
-        $omxService = $this->container->get('homesoft_platform_files.omx_reader');
-        return new Response($omxService->volumeDown());
+        $response = new Response($mediaService->ctrlVideo($cmdCtrlVideo));
+        return $response;
     }
 }

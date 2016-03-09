@@ -5,6 +5,20 @@ namespace Homesoft\PlatformFilesBundle\services;
 
 class OmxReader {
     private $fifoFile = "/tmp/cmd-omxplayer";
+    private $listCtrlVideo = array(
+        "play"          => ".",
+        "pause"         => "-n p",
+        "stop"          => "-n q",
+        "backward"      => "-n '<'",
+        "forward"       => "-n '>'",
+        "step-backward" => "-n $'\x5b\x44'",
+        "step-forward"  => "-n $'\x1b\x5b\x43'",
+        "fast-backward" => "-n '<'",
+        "fast-forward"  => "-n '>'",
+        "load-subtitle" => "-n s",
+        "volume-up"     => "-n +",
+        "volume-down"   => "-n -"
+    );
     public function link($file) {
         if($this->fifoExist()){
             $this->removeFifo();
@@ -16,108 +30,23 @@ class OmxReader {
         sleep(1);
         return $msg;
     }
-
-    public function play() {
-        sleep(3);
-        $cmd = 'echo . > '.$this->fifoFile;
-        $msg = shell_exec($cmd);
-        sleep(1);
-        return $msg;
-    }
-
-    public function pause() {
-        $cmd = 'echo -n p > '.$this->fifoFile;
+    public function ctrlVideo($cmd){
+        $cmd = 'echo '.$this->listCtrlVideo[$cmd].' > '.$this->fifoFile;
         $msg = shell_exec($cmd);
         return $msg;
     }
-
-    public function backward() {
-        $cmd = 'echo -n "<" > '.$this->fifoFile;
-        $msg = shell_exec($cmd);
-        sleep(1);
-        return $msg;
-    }
-
-    public function stepBackward() {
-        $cmd = 'echo -n $\'\x5b\x44\' > '.$this->fifoFile;
-        $msg = shell_exec($cmd);
-        sleep(1);
-        return $msg;
-    }
-
-    public function fastBackward() {
-        $cmd = 'echo -n "<" > '.$this->fifoFile;
-        $msg = shell_exec($cmd);
-        sleep(1);
-        return $msg;
-    }
-
-    public function forward() {
-        $cmd = 'echo -n ">" > '.$this->fifoFile;
-        $msg = shell_exec($cmd);
-        sleep(1);
-        return $msg;
-    }
-
-    public function fastForward() {
-        $cmd = 'echo -n ">" > '.$this->fifoFile;
-        $msg = shell_exec($cmd);
-        sleep(1);
-        return $msg;
-    }
-
-    public function stepForward() {
-        $cmd = 'echo -n $\'\x1b\x5b\x43\' > '.$this->fifoFile;
-        $msg = shell_exec($cmd);
-        sleep(1);
-        return $msg;
-    }
-
-    public function stop() {
-        $cmd = 'echo -n q > '.$this->fifoFile;
-        $msg = shell_exec($cmd);
-        sleep(1);
-        $this->kill();
-        return $msg;
-    }
-
     public function kill() {
         $cmd = 'killall omxplayer.bin';
         $msg = shell_exec($cmd);
         sleep(1);
         return $msg;
     }
-
-    public function loadSubtitle() {
-        $msg = shell_exec('echo -n s > '.$this->fifoFile);
-        sleep(1);
-        return $msg;
-    }
-
-    public function volumeUp() {
-        $msg = shell_exec('echo -n + > '.$this->fifoFile);
-        sleep(1);
-        return $msg;
-    }
-
-    public function volumeDown() {
-        $msg = shell_exec('echo -n - > '.$this->fifoFile);
-        sleep(1);
-        return $msg;
-    }
-    public function volumeOff() {
-        $msg = shell_exec('echo -n - > '.$this->fifoFile);
-        sleep(1);
-        return $msg;
-    }
-
     public function fifoExist() {
         if(file_exists($this->fifoFile)) {
             return true;
         }
         return false;
     }
-
     public function createFifo() {
         $cmd = 'mkfifo '.$this->fifoFile;
         $msg = shell_exec($cmd);

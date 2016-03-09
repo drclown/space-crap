@@ -10,88 +10,16 @@ homesoft_platform_files_get_files:
     requirements:
         methods: POST
 
-homesoft_platform_files_play_file:
-    path: /play
-    defaults: { _controller: HomesoftPlatformFilesBundle:Files:playFile }
-    options:
-        expose: true
-    requirements:
-        methods: POST
-
-homesoft_platform_files_stop_file:
-    path: /stop
-    defaults: { _controller: HomesoftPlatformFilesBundle:Files:stopFile }
-    options:
-        expose: true
-
-homesoft_platform_files_pause_file:
-    path: /pause
-    defaults: { _controller: HomesoftPlatformFilesBundle:Files:pauseFile }
-    options:
-        expose: true
-
 homesoft_platform_files_link_file:
     path: /link
     defaults: { _controller: HomesoftPlatformFilesBundle:Files:linkFile }
     options:
         expose: true
 
-homesoft_platform_files_volume_down:
-    path: /volume-down
-    defaults: { _controller: HomesoftPlatformFilesBundle:Files:volumeDownFile }
+homesoft_platform_files_cmd_ctrl:
+    path: /cmd-ctrl-file/{cmdCtrlVideo}
+    defaults: { _controller: HomesoftPlatformFilesBundle:Files:cmdCtrlFile }
     options:
         expose: true
-
-homesoft_platform_files_volume_off:
-    path: /volume-off
-    defaults: { _controller: HomesoftPlatformFilesBundle:Files:volumeOffFile  }
-    options:
-        expose: true
-
-homesoft_platform_files_volume_up:
-    path: /volume-up
-    defaults: { _controller: HomesoftPlatformFilesBundle:Files:volumeUpFile  }
-    options:
-        expose: true
-
-homesoft_platform_files_backward:
-    path: /backward
-    defaults: { _controller: HomesoftPlatformFilesBundle:Files:backwardFile  }
-    options:
-        expose: true
-
-homesoft_platform_files_step_backward:
-    path: /step-backward
-    defaults: { _controller: HomesoftPlatformFilesBundle:Files:stepBackwardFile  }
-    options:
-        expose: true
-
-homesoft_platform_files_forward:
-    path: /forward
-    defaults: { _controller: HomesoftPlatformFilesBundle:Files:forwardFile  }
-    options:
-        expose: true
-
-homesoft_platform_files_fast_backward:
-    path: /fast-backward
-    defaults: { _controller: HomesoftPlatformFilesBundle:Files:fastBackwardFile  }
-    options:
-        expose: true
-
-homesoft_platform_files_step_forward:
-    path: /step-forward
-    defaults: { _controller: HomesoftPlatformFilesBundle:Files:stepForwardFile  }
-    options:
-        expose: true
-
-homesoft_platform_files_fast_forward:
-    path: /fast-forward
-    defaults: { _controller: HomesoftPlatformFilesBundle:Files:fastForwardFile  }
-    options:
-        expose: true
-
-homesoft_platform_files_load_subtitle:
-    path: /load-subtitle
-    defaults: { _controller: HomesoftPlatformFilesBundle:Files:loadSubtitleFile  }
-    options:
-        expose: true
+    requirements:
+        methods: GET

@@ -22,18 +22,17 @@ class RemoteScanner {
 
     /* Retourne les dossiers trouvés dans $this->pathRemote sous la forme d'un tableau de remotes */
     public function scanRemotes() {
-        $arrayRemotes = array();
+        $listRemotes = array();
         $finder = new Finder();
         $remotes = $finder
             ->directories()
             ->depth(0)
             ->in($this->pathRemote)
         ;
-        //print_r($remotes);
         foreach($remotes AS $path) {
-            $arrayRemotes[] = new Remote($path);
+            $listRemotes[] = new Remote($path);
         }
-        return $arrayRemotes;
+        return $listRemotes;
     }
 
     public function findSeriesFilmsPaths($remotes) {
