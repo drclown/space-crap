@@ -20,9 +20,9 @@
         </div>
     </div>
     <div class="col-sm-1">
-    <div class="btn-group">
-        <a id="load-subtitle" class="btn btn-default btn-lg" href="#"><span class="fa fa-language"></span>&nbsp;</a>
-    </div>
+        <div class="btn-group">
+            <a id="load-subtitle" class="btn btn-default btn-lg" href="#"><span class="fa fa-language"></span>&nbsp;</a>
+        </div>
     </div>
 </div>
 
@@ -44,7 +44,7 @@ $( document ).ready(function() {
     });
     $(".execute-cmd").on("click", function() {
         var id = $(this).attr("id");
-        $.ajax({url: Routing.generate("homesoft_platform_files_cmd_ctrl", {cmd: id})});
+        $.ajax({url: Routing.generate("homesoft_platform_files_cmd_ctrl", {cmdCtrlVideo: id})});
     });
 });
 </script>
