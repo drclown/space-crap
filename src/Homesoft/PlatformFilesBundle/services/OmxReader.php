@@ -99,6 +99,9 @@ class OmxReader {
         fclose($logFile);
     }
     public function readLog() {
+        if(!file_exists($this->logFile)){
+            $this->createLog();
+        }
         $logFile = fopen($this->logFile, 'r+');
         $fileSize = filesize($this->logFile);
         if($fileSize > 0){
