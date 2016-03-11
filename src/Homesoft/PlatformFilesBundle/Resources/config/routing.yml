@@ -17,9 +17,15 @@ homesoft_platform_files_link_file:
         expose: true
 
 homesoft_platform_files_cmd_ctrl:
-    path: /cmd-ctrl-file/{cmdCtrlVideo}
+    path: /ctrl-file/{cmdCtrlVideo}
     defaults: { _controller: HomesoftPlatformFilesBundle:Files:cmdCtrlFile }
     options:
         expose: true
     requirements:
         methods: GET
+
+homesoft_platform_files_get_playing_file:
+    path: /get-playing-file
+    defaults: { _controller: HomesoftPlatformFilesBundle:Files:getPlayingFile }
+    options:
+        expose: true

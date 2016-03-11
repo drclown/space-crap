@@ -17,8 +17,12 @@ class FilesController extends Controller {
         $remoteScanner = new RemoteScanner("/media");
         $remotes = $remoteScanner->scanRemotes();
         $remotes = $remoteScanner->findSeriesFilmsPaths($remotes);
+        $service = "omx_reader";
+        $mediaService = $this->container->get('homesoft_platform_files.'.$service);
+        $playingFile = $mediaService->readLog();
         return $this->render('HomesoftPlatformFilesBundle:Files:files.html.twig', array(
-            "remotes"   => $remotes
+            "remotes"       => $remotes,
+            "playingFile"   => $playingFile
         ));
     }
 
@@ -32,17 +36,11 @@ class FilesController extends Controller {
         return $response;
     }
 
-    public function formatPathFile($pathFile) {
-        $pathFile = str_replace(' ', '\\ ', $pathFile);
-        $pathFile = str_replace(')', '\\)', $pathFile);
-        return str_replace('(', '\\(', $pathFile);
-    }
-
-    // Reli le fichier video au fichier fifo
+    // Effectue la liaison entre le fichier video et le fichier fifo
     public function linkFileAction(Request $request) {
         $systemScanner = new SystemScanner();
         //$service = $systemScanner->getVideoService();
-        $pathFile = $this->formatPathFile($request->request->get("pathFile"));
+        $pathFile = $request->request->get("pathFile");
         $service = "omx_reader";
         $mediaService = $this->container->get('homesoft_platform_files.'.$service);
         return new Response($mediaService->link($pathFile));
@@ -55,7 +53,13 @@ class FilesController extends Controller {
         //$service = $systemScanner->getVideoService();
         $service = "omx_reader";
         $mediaService = $this->container->get('homesoft_platform_files.'.$service);
-        $response = new Response($mediaService->ctrlVideo($cmdCtrlVideo));
-        return $response;
+        return new Response($mediaService->ctrlVideo($cmdCtrlVideo));
+    }
+
+    /*  Lit le fichier /tmp/logFile (par default ) afin de récuperer la video en train d'etre executé */
+    public function getPlayingFileAction() {
+        $service = "omx_reader";
+        $mediaService = $this->container->get('homesoft_platform_files.'.$service);
+        return new Response($mediaService->readLog());
     }
 }

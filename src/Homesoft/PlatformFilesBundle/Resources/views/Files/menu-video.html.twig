@@ -1,47 +1,66 @@
 <div id="menu-video">
-    <div class="col-sm-8">
-        <div class="btn-group">
-            <a id="fast-backward" class="execute-cmd btn btn-warning btn-lg" href="#"><span class="fa fa-fast-backward"></span>&nbsp;</a>
-            <a id="step-backward" class="execute-cmd btn btn-info btn-lg" href="#"><span class="fa fa-step-backward"></span>&nbsp;</a>
-            <a id="backward" class="execute-cmd btn btn-info btn-lg" href="#"><span class="fa fa-backward"></span>&nbsp;</a>
-            <a id="play" class="btn btn-success btn-lg" href="#"><span class="fa fa-play"></span>&nbsp;</a>
-            <a id="pause" class="execute-cmd btn btn-info btn-lg" href="#"><span class="fa fa-pause"></span>&nbsp;</a>
-            <a id="stop" class="execute-cmd btn btn-danger btn-lg" href="#"><span class="fa fa-stop"></span>&nbsp;</a>
-            <a id="forward" class="execute-cmd btn btn-info btn-lg" href="#"><span class="fa fa-forward"></span>&nbsp;</a>
-            <a id="step-forward" class="execute-cmd btn btn-info btn-lg" href="#"><span class="fa fa-step-forward"></span>&nbsp;</a>
-            <a id="fast-forward" class="execute-cmd btn btn-warning btn-lg" href="#"><span class="fa fa-fast-forward"></span>&nbsp;</a>
+    <div id="information-playing-file">
+        <div class="col-lg-12">
+            {% if playingFile != ""  %}
+                Fichier en cour : {{ playingFile }}
+            {% endif %}
         </div>
     </div>
-    <div class="col-sm-3">
-        <div class="btn-group">
-            <a id="volume-down" class="execute-cmd btn btn-default btn-lg" href="#"><span class="fa fa-volume-down"></span>&nbsp;</a>
-            <a id="volume-off" class="execute-cmd btn btn-default btn-lg" href="#"><span class="fa fa-volume-off"></span>&nbsp;</a>
-            <a id="volume-up" class="execute-cmd btn btn-default btn-lg" href="#"><span class="fa fa-volume-up"></span>&nbsp;</a>
+
+    <div id="remote-control">
+        <div class="col-sm-8">
+            <div class="btn-group">
+                <a id="fast-backward" class="execute-cmd btn btn-warning btn-lg" href="#"><span class="fa fa-fast-backward"></span>&nbsp;</a>
+                <a id="step-backward" class="execute-cmd btn btn-info btn-lg" href="#"><span class="fa fa-step-backward"></span>&nbsp;</a>
+                <a id="backward" class="execute-cmd btn btn-info btn-lg" href="#"><span class="fa fa-backward"></span>&nbsp;</a>
+                <a id="play" class="execute-cmd btn btn-success btn-lg" href="#"><span class="fa fa-play"></span>&nbsp;</a>
+                <a id="pause" class="execute-cmd btn btn-info btn-lg" href="#"><span class="fa fa-pause"></span>&nbsp;</a>
+                <a id="stop" class="execute-cmd btn btn-danger btn-lg" href="#"><span class="fa fa-stop"></span>&nbsp;</a>
+                <a id="forward" class="execute-cmd btn btn-info btn-lg" href="#"><span class="fa fa-forward"></span>&nbsp;</a>
+                <a id="step-forward" class="execute-cmd btn btn-info btn-lg" href="#"><span class="fa fa-step-forward"></span>&nbsp;</a>
+                <a id="fast-forward" class="execute-cmd btn btn-warning btn-lg" href="#"><span class="fa fa-fast-forward"></span>&nbsp;</a>
+            </div>
         </div>
-    </div>
-    <div class="col-sm-1">
-        <div class="btn-group">
-            <a id="load-subtitle" class="btn btn-default btn-lg" href="#"><span class="fa fa-language"></span>&nbsp;</a>
+        <div class="col-sm-3">
+            <div class="btn-group">
+                <a id="volume-down" class="execute-cmd btn btn-default btn-lg" href="#"><span class="fa fa-volume-down"></span>&nbsp;</a>
+                <a id="volume-off" class="execute-cmd btn btn-default btn-lg" href="#"><span class="fa fa-volume-off"></span>&nbsp;</a>
+                <a id="volume-up" class="execute-cmd btn btn-default btn-lg" href="#"><span class="fa fa-volume-up"></span>&nbsp;</a>
+            </div>
+        </div>
+        <div class="col-sm-1">
+            <div class="btn-group">
+                <a id="load-subtitle" class="btn btn-default btn-lg" href="#"><span class="fa fa-language"></span>&nbsp;</a>
+            </div>
         </div>
     </div>
 </div>
 
 <script>
 $( document ).ready(function() {
-    $("#play").on("click", function() {
-        console.log($(this).val());
-        var pathVideo = $(this).val();
-        var id = $(this).attr("id");
-        $.ajax({
-            type: "POST",
-            data: {pathFile: pathVideo},
-            url: Routing.generate("homesoft_platform_files_link_file")
-        });
-        $.ajax({url: Routing.generate("homesoft_platform_files_cmd_ctrl", {cmdCtrlVideo: id})});
-    });
     $(".execute-cmd").on("click", function() {
         var id = $(this).attr("id");
-        $.ajax({url: Routing.generate("homesoft_platform_files_cmd_ctrl", {cmdCtrlVideo: id})});
+        if(id === "play") {
+            var pathVideo = $(this).val();
+            $.ajax({
+                type: "POST",
+                data: {pathFile: pathVideo},
+                url: Routing.generate("homesoft_platform_files_link_file")
+            });
+        }
+        $.ajax({
+            url: Routing.generate("homesoft_platform_files_cmd_ctrl", {cmdCtrlVideo: id}),
+            complete: function(data) {
+                var playingFile = data.responseText;
+                var text = "";
+                console.log(text);
+                if(playingFile !== '') {
+                    text = "Fichier en cour : " + playingFile;
+                }
+                $("#information-playing-file div").html(text);
+            }
+
+        });
     });
 });
 </script>
