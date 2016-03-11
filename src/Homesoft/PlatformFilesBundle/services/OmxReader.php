@@ -41,26 +41,24 @@ class OmxReader {
         return str_replace('(', '\\(', $pathFile);
     }
 
-    public function ctrlVideo($cmd){
-        $msg = $this->readLog();
-        switch($cmd){
+    public function ctrlVideo($cmd) {
+        switch($cmd) {
             case "play":
                 sleep(3);
-                $cmd = 'echo '.$this->listCtrlVideo[$cmd].' > '.$this->fifoFile;
-                shell_exec($cmd);
             break;
             case "stop":
                 $this->eraseLog();
-                $msg = "";
-                $cmd = 'echo '.$this->listCtrlVideo[$cmd].' > '.$this->fifoFile;
-                shell_exec($cmd);
-                $this->kill();
-            break;
-            default:
-                $cmd = 'echo '.$this->listCtrlVideo[$cmd].' > '.$this->fifoFile;
-                shell_exec($cmd);
             break;
         }
+
+        $msg = $this->readLog();
+        $cmd = 'echo '.$this->listCtrlVideo[$cmd].' > '.$this->fifoFile;
+        shell_exec($cmd);
+
+        if($cmd==="stop"){
+            $this->kill();
+        }
+
         return $msg;
     }
     public function kill() {
