@@ -10,7 +10,7 @@ use Homesoft\PlatformFilesBundle\services\Remote;
 class RemoteScanner {
     private $pathRemote;
     private $videoExtensions = ["mp4", "avi", "mkv", "wmv", "divx", "flv"];
-    private $listDirectoriesToCheck = ["film", "films", "serie", "series", "reportages", "reportage", "musiques", "musique"];
+    private $listDirectoriesToCheck = ["film", "films", "serie", "series", "reportages", "reportage"];
     private $imageExtensions = ["jpeg", "jpg", "png", "gif"];
     private $audioExtensions = ["mp3"];
     private $textExtensions = ["txt"];
@@ -46,6 +46,28 @@ class RemoteScanner {
             }
         }
         return $remotes;
+    }
+
+    public function isTvShow($directory) {
+        if(trim($directory) === "\\series" || trim($directory) === "\\serie") {
+            return true;
+        }
+        return false;
+    }
+
+    public function getTitleList($directory) {
+        $finder = new Finder();
+        $method= "files";
+        if($this->isTvShow($directory)){
+            $method= "directory";
+        }
+        $titles = $finder
+            ->$method()
+            ->depth(0)
+            ->in($directory)
+        ;
+
+        return $titles;
     }
 
     public function directoryExist($path) {

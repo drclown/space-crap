@@ -37,8 +37,13 @@ function createTreeFiles(path){
             "case_insensitive": true,
                 "show_only_matches" : true
         },
-        "plugins" : [ "types", "search" ]
-    }).bind("select_node.jstree", function(evt, data){;
+        "plugins" : [
+            "types",
+            "search",
+            "contextmenu"
+        ]
+    })
+    .bind("select_node.jstree", function(evt, data){;
         if(data.node.type === "file-film") {
             $("#play").val(data.node.id);
         }

@@ -2,7 +2,6 @@
 
 namespace Homesoft\PlatformFilesBundle\services;
 
-
 class OmxReader {
     private $fifoFile = "/tmp/cmd-omxplayer";
     private $logFile = "/tmp/log-space-crap.txt";
@@ -32,6 +31,7 @@ class OmxReader {
         $cmd = 'omxplayer -o hdmi --blank ' . $this->formatPath($file) . " < " . $this->fifoFile;
         $msg = shell_exec($cmd);
         sleep(1);
+        $this->eraseLog();
         return $msg;
     }
 
@@ -50,15 +50,12 @@ class OmxReader {
                 $this->eraseLog();
             break;
         }
-
         $msg = $this->readLog();
         $cmd = 'echo '.$this->listCtrlVideo[$cmd].' > '.$this->fifoFile;
         shell_exec($cmd);
-
-        if($cmd==="stop"){
+        if($cmd === "stop"){
             $this->kill();
         }
-
         return $msg;
     }
     public function kill() {
