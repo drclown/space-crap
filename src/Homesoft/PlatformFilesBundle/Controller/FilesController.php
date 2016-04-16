@@ -19,7 +19,8 @@ class FilesController extends Controller {
         $remotes = $remoteScanner->findSeriesFilmsPaths($remotes);
         $service = "omx_reader";
         $mediaService = $this->container->get('homesoft_platform_files.'.$service);
-        $playingFile = $mediaService->readLog();
+        //$playingFile = $mediaService->readLog();
+        $playingFile = "";
         return $this->render('HomesoftPlatformFilesBundle:Files:files.html.twig', array(
             "remotes"       => $remotes,
             "playingFile"   => $playingFile

@@ -25,30 +25,6 @@
             {% endif %}
         {% endfor %}
     </ul>
-    {# new display #}
-    <ul class="nav navbar-nav">
-        {% for remote in remotes %}
-            {% if remote.directories | length == 0 %}
-                <li>
-                    <a href="#" id="{{ remote.path }}" class="load-tree">{{ remote.path.getBasename }}</a>
-                </li>
-            {% else %}
-            <li class="dropdown">
-                <a href="#"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                    <span class="basename">{{ remote.path.getBasename }}</span>
-                    <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a class="load-mosaic" id="{{ remote.path }}" href="#"><span class="basename">{{ remote.path.getBasename }}</span></a></li>
-                    <li role="separator" class="divider"></li>
-                    {% for directory in remote.directories  %}
-                        <li><a class="load-mosaic" id="{{ directory }}" href="#"><span class="basename">{{ directory.getBasename }}</span></a></li>
-                    {% endfor %}
-                </ul>
-            </li>
-            {% endif %}
-        {% endfor %}
-    </ul>
     <div class="pull-right col-sm-1">
         <a href="#" class="navbar-btn btn btn-default" id="refresh">
             <span class="fa fa-refresh"></span>

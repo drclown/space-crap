@@ -1,0 +1,23 @@
+{
+  "name": "space-crap",
+  "version": "1.0.0",
+  "description": "a space of crap",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drclown/space-crap.git"
+  },
+  "author": "tompouce",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/drclown/space-crap/issues"
+  },
+  "homepage": "https://github.com/drclown/space-crap#readme",
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-jshint": "^1.0.0"
+  }
+}

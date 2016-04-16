@@ -2,32 +2,15 @@
 
 {% block body %}
 <div class="row">
-    <div id="path">/media</div>
-</div>
-<div class="row">
-    <div class="col-sm-5">
-        {{ include("HomesoftPlatformFilesBundle:Files:files-tree.html.twig") }}
+    <div>
+
     </div>
+</div>
     <div class="col-sm-7">
         <div class="row">
             {{ include("HomesoftPlatformFilesBundle:Files:menu-video.html.twig") }}
         </div>
-        <div class="row">
-            {{ include("HomesoftPlatformFilesBundle:Files:prez-media.html.twig") }}
-        </div>
     </div>
 </div>
-
-<script>
-    $( document ).ready(function() {
-        createTreeFiles("/media");
-
-        $("#search-files")
-        .keyup(function() {
-            var searchString = $(this).val();
-            $('#tree-files').jstree('search', searchString);
-        });
-    });
-</script>
 
 {% endblock %}

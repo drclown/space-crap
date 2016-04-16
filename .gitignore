@@ -14,3 +14,6 @@
 nbproject/
 composer.lock
 bower_components/
+web/assets/vendor/
+npm-debug.log
+node_modules/
