@@ -18,6 +18,12 @@
   "homepage": "https://github.com/drclown/space-crap#readme",
   "devDependencies": {
     "grunt": "^1.0.1",
-    "grunt-contrib-jshint": "^1.0.0"
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-express": "^1.4.1",
+    "grunt-livereload": "^0.1.3",
+    "grunt-parallel": "^0.4.1",
+    "matchdep": "^1.0.1",
+    "watch": "^0.17.1"
   }
 }
