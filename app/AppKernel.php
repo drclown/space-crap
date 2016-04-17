@@ -17,8 +17,8 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Homesoft\PlatformFilesBundle\HomesoftPlatformFilesBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
-            new \FOS\JsRoutingBundle\FOSJsRoutingBundle(),
-            new Bmatzner\FontAwesomeBundle\BmatznerFontAwesomeBundle(),
+            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+            new Homesoft\RemoteControlBundle\HomesoftRemoteControlBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

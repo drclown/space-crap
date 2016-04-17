@@ -1,15 +1,19 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-<div class="row">
-    <div>
 
-    </div>
+<div class="row">
+    <section ng-controller="mediaCtrl">
+        <article ng-show="medias.length">
+            <ul>
+                <li ng-repeat="media in medias">{[{ media.title }]}</li>
+            </ul>
+        </article>
+    </section>
 </div>
-    <div class="col-sm-7">
-        <div class="row">
-            {{ include("HomesoftPlatformFilesBundle:Files:menu-video.html.twig") }}
-        </div>
+<div class="row">
+    <div class="col-sm-12">
+        {{ include("HomesoftPlatformFilesBundle:Files:menu-video.html.twig") }}
     </div>
 </div>
 

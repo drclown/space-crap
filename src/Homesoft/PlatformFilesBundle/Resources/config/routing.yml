@@ -1,31 +1,20 @@
 homesoft_platform_files_homepage:
     path:     /
-    defaults: { _controller: HomesoftPlatformFilesBundle:Files:index }
+    defaults: { _controller: HomesoftPlatformFilesBundle:Default:index }
 
 homesoft_platform_files_get_files:
-    path:   /get
-    defaults: { _controller: HomesoftPlatformFilesBundle:Files:getFiles }
-    options:
-        expose: true
+    path:   /files
+    defaults: { _controller: HomesoftPlatformFilesBundle:Default:getFiles }
     requirements:
         methods: POST
-
-homesoft_platform_files_link_file:
-    path: /link
-    defaults: { _controller: HomesoftPlatformFilesBundle:Files:linkFile }
     options:
         expose: true
 
-homesoft_platform_files_cmd_ctrl:
-    path: /ctrl-file/{cmdCtrlVideo}
-    defaults: { _controller: HomesoftPlatformFilesBundle:Files:cmdCtrlFile }
-    options:
-        expose: true
+homesoft_platform_files_get_remotes:
+    path:   /remotes
+    defaults: { _controller: HomesoftPlatformFilesBundle:Default:getRemotes }
     requirements:
         methods: GET
-
-homesoft_platform_files_get_playing_file:
-    path: /get-playing-file
-    defaults: { _controller: HomesoftPlatformFilesBundle:Files:getPlayingFile }
     options:
         expose: true
+

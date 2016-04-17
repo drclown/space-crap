@@ -4,7 +4,8 @@ module.exports = function(grunt){
         watch:{
             options:{livereload:true},
             files:[
-                '**/*.html.twig'
+                '**/*.html.twig',
+                '**/*.js'
             ],
             tasks:[]
         },

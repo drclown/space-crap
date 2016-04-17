@@ -1,16 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="spaceCrapApp">
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}space-crap Josay !{% endblock %}</title>
 
         <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap/dist/css/bootstrap.min.css') }}" type="text/css">
-        {% javascripts '@HomesoftPlatformFilesBundle/Resources/public/js/space-crap.js'%}
+        {% javascripts '@HomesoftPlatformFilesBundle/Resources/public/js/space-crap.js'
+        '@HomesoftPlatformFilesBundle/Resources/public/js/spaceCrap.js' %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
 
         <script type="text/javascript" src="{{ asset('assets/vendor/jquery/dist/jquery.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('assets/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/vendor/angular/angular.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/vendor/angular-route/angular-route.min.js') }}"></script>
 
         <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
         <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>

@@ -1,0 +1,4 @@
+services:
+
+    homesoft_remote_control.omx_reader:
+        class: Homesoft\PlatformFilesBundle\services\OmxReader

@@ -1,48 +1,28 @@
-<nav id="nav-space-crap" class="navbar navbar-default">
+<nav id="nav-space-crap" class="navbar navbar-default" ng-controller="remoteCtrl">
     <div class="navbar-header active">
         <a id="/media" class="navbar-brand load-tree" href="#">/media</a>
     </div>
     <ul class="nav navbar-nav">
-        {% for remote in remotes %}
-            {% if remote.directories | length == 0 %}
-                <li>
-                    <a href="#" id="{{ remote.path }}" class="load-tree">{{ remote.path.getBasename }}</a>
+        <li class="dropdown" ng-show="!remotes.length">
+            <a class="dropdown-toggle">0 remote found</a>
+        </li>
+        <li ng-repeat="remote in remotes" class="dropdown">
+            <a href="#"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                <span>{[{ remote.basename }]}</span>
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li ng-repeat="mediaDirectory in remote.mediaDirectories">
+                    <a href="#" ng-click="loadMedias(mediaDirectory.path)">
+                        <span class="basename">{[{ mediaDirectory.basename }]}</span>
+                    </a>
                 </li>
-            {% else %}
-            <li class="dropdown">
-                <a href="#"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                    <span class="basename">{{ remote.path.getBasename }}</span>
-                    <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a class="load-tree" id="{{ remote.path }}" href="#"><span class="basename">{{ remote.path.getBasename }}</span></a></li>
-                    <li role="separator" class="divider"></li>
-                    {% for directory in remote.directories  %}
-                        <li><a class="load-tree" id="{{ directory }}" href="#"><span class="basename">{{ directory.getBasename }}</span></a></li>
-                    {% endfor %}
-                </ul>
-            </li>
-            {% endif %}
-        {% endfor %}
+            </ul>
+        </li>
     </ul>
     <div class="pull-right col-sm-1">
         <a href="#" class="navbar-btn btn btn-default" id="refresh">
-            <span class="fa fa-refresh"></span>
+            <span class="glyphicon glyphicon-refresh"></span>
         </a>
     </div>
 </nav>
-<script>
-$( document ).ready(function() {
-    $("a.load-tree").on("click", function () {
-        var path = $(this).attr("id");
-        var name = $(this).find(".basename").html();
-        $("#path").text(path);
-        $("#path").attr("value", name);
-        createTreeFiles(path);
-    });
-    $("#refresh").on("click", function() {
-        var path = $("#path").html();
-        createTreeFiles(path);
-    });
-});
-</script>

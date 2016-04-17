@@ -4,98 +4,67 @@ namespace Homesoft\PlatformFilesBundle\services\RemoteScanner;
 
 namespace Homesoft\PlatformFilesBundle\services;
 
+use Homesoft\PlatformFilesBundle\Entity\Media;
+use Homesoft\PlatformFilesBundle\Entity\MediasCollection;
 use Symfony\Component\Finder\Finder;
-use Homesoft\PlatformFilesBundle\services\Remote;
+use Homesoft\PlatformFilesBundle\Entity\Remote;
+use Homesoft\PlatformFilesBundle\Entity\RemotesCollection;
 
 class RemoteScanner {
-    private $pathRemote;
-    private $videoExtensions = ["mp4", "avi", "mkv", "wmv", "divx", "flv"];
+    private $basePath;
     private $listDirectoriesToCheck = ["film", "films", "serie", "series", "reportages", "reportage"];
-    private $imageExtensions = ["jpeg", "jpg", "png", "gif"];
-    private $audioExtensions = ["mp3"];
-    private $textExtensions = ["txt"];
-    private $codeExtensions = ["html", "php", "css", "xml"];
+
+    private $arrayExtensions = [
+        "video" => ["mp4", "avi", "mkv", "wmv", "divx", "flv"],
+        "image" => ["jpeg", "jpg", "png", "gif"],
+        "audio" => ["mp3"],
+        "text" => ["txt"],
+        "code" => ["html", "php", "css", "xml"]
+    ];
 
     public function __construct($path = "") {
-        $this->setPathRemote($path);
+        $this->setBasePath($path);
     }
 
-    /* Retourne les dossiers trouvés dans $this->pathRemote sous la forme d'un tableau de remotes */
+    /* Retourne un RemotesCollection trouvé dans $this->basePath */
     public function scanRemotes() {
-        $listRemotes = array();
+        $listRemotes = new RemotesCollection();
         $finder = new Finder();
         $remotes = $finder
             ->directories()
             ->depth(0)
-            ->in($this->pathRemote)
+            ->in($this->basePath)
         ;
         foreach($remotes AS $path) {
-            $listRemotes[] = new Remote($path);
+            $listRemotes->addRemote(new Remote($path));
         }
+        $this->findMediaPaths($listRemotes);
         return $listRemotes;
     }
 
-    public function findSeriesFilmsPaths($remotes) {
-        foreach($remotes AS $remote){
-            $path = $remote->getPath();
-            foreach($this->listDirectoriesToCheck AS $directoryToCheck){
-                $finder = new Finder();
-                foreach($finder->in("$path")->name("$directoryToCheck") AS $directory) {
-                    $remote->addDirectory($directory);
+    public function findMediaPaths(RemotesCollection $remotes) {
+        if($remotes->getRemotes() !== null){
+            foreach($remotes->getRemotes() AS $remote){
+                $path = $remote->getPath();
+                foreach($this->listDirectoriesToCheck AS $directoryToCheck){
+                    $finder = new Finder();
+                    foreach($finder->in("$path")->name("$directoryToCheck") AS $directory) {
+                        $remote->addMediaDirectory($directory);
+                    }
                 }
             }
         }
-        return $remotes;
-    }
-
-    public function isTvShow($directory) {
-        if(trim($directory) === "\\series" || trim($directory) === "\\serie") {
-            return true;
-        }
-        return false;
-    }
-
-    public function getTitleList($directory) {
-        $finder = new Finder();
-        $method= "files";
-        if($this->isTvShow($directory)){
-            $method= "directory";
-        }
-        $titles = $finder
-            ->$method()
-            ->depth(0)
-            ->in($directory)
-        ;
-
-        return $titles;
-    }
-
-    public function directoryExist($path) {
-        if(!file_exists($path)){
-            return false;
-        }
-        return true;
     }
 
     public function getFileType($nameFile){
         $type = "";
         $extension = $this->getExtension($nameFile);
-        if(in_array($extension, $this->videoExtensions)){
-            $type = "-film";
+        foreach($this->getArrayExtensions() AS $key => $extensions){
+            if(in_array($extension, $extensions)){
+                $type = $key;
+            }
         }
-        elseif(in_array($extension, $this->imageExtensions)){
-            $type = "-image";
-        }
-        elseif(in_array($extension, $this->audioExtensions)){
-            $type = "-audio";
-        }
-        elseif(in_array($extension, $this->textExtensions)){
-            $type = "-code";
-        }
-        elseif(in_array($extension, $this->codeExtensions)){
-            $type = "-text";
-        }
-        return "file".$type;
+        return "file-".$type;
     }
 
     public function getExtension($nameFile) {
@@ -106,11 +75,36 @@ class RemoteScanner {
         return $extension;
     }
 
+    public function getTitleMedia($nameFile){
+        $title = explode(".", $nameFile);
+        if(count($title) > 0) {
+            unset($title[count($title)-1]);
+            $title = $title[count($title)-1];
+        }
+        return $title;
+    }
+
+    // Retourne un media collection en fonction du $path donné
+    public function getMedias($path){
+        $finder = new Finder();
+        $files = new MediasCollection();
+        foreach($finder->files()->in($path) AS $file){
+            $basename = $file->getBasename();
+            $media =  new Media();
+            
+            $media->setExtension($this->getExtension($basename));
+            $media->setPath($file->getRealPath());
+            $media->setName($this->getTitleMedia($basename));
+            $files->addMedias($media);
+        }
+        return $files;
+    }
+
     public function getDirectoriesAndFiles() {
         $finder = new Finder();
         $DirectoriesAndFiles = array();
 
-        foreach($finder->in($this->pathRemote) AS $DirectoryAndFile) {
+        foreach($finder->in($this->basePath) AS $DirectoryAndFile) {
             $type = "dir";
             if($DirectoryAndFile->getType() === "file") {
                 $type = $this->getFileType($DirectoryAndFile->getBasename());
@@ -144,18 +138,21 @@ class RemoteScanner {
         return $parent;
     }
 
-    public function setPathRemote($pathRemote) {
-        if(!is_string($pathRemote)) {
+    /**
+     * @param $basePath
+     */
+    public function setBasePath($basePath) {
+        if(!is_string($basePath)) {
             trigger_error("The remoteScanner path must be a string !");
             return;
         }
-        if($pathRemote === "") {
+        if($basePath === "") {
             trigger_error("The path is empty !");
             return;
         }
         else {
-            if($this->directoryExist($pathRemote)){
-                $this->pathRemote = $pathRemote;
+            if(file_exists($basePath)){
+                $this->basePath = $basePath;
             }
             else {
                 trigger_error("The path doesnt exist !");
@@ -164,7 +161,11 @@ class RemoteScanner {
         }
     }
 
-    public function getPathRemote(){
-        return $this->pathRemote;
+    public function getBasePath(){
+        return $this->basePath;
+    }
+
+    public function getArrayExtensions() {
+        return $this->arrayExtensions;
     }
 }

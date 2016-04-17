@@ -1,0 +1,19 @@
+homesoft_remote_control_link_file:
+    path: /link
+    defaults: { _controller: HomesoftRemoteControlBundle:Files:linkFile }
+    options:
+        expose: true
+
+homesoft_remote_control_cmd_ctrl:
+    path: /ctrl-file/{cmdCtrlVideo}
+    defaults: { _controller: HomesoftRemoteControlBundle:Files:cmdCtrlFile }
+    options:
+        expose: true
+    requirements:
+        methods: GET
+
+homesoft_remote_control_get_playing_file:
+    path: /get-playing-file
+    defaults: { _controller: HomesoftRemoteControlBundle:Files:getPlayingFile }
+    options:
+        expose: true
