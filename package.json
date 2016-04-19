@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/drclown/space-crap#readme",
   "devDependencies": {
+    "angular": "^1.5.5",
     "grunt": "^1.0.1",
     "grunt-contrib-jshint": "^1.0.0",
     "grunt-contrib-watch": "^1.0.0",
@@ -25,5 +26,6 @@
     "grunt-parallel": "^0.4.1",
     "matchdep": "^1.0.1",
     "watch": "^0.17.1"
-  }
+  },
+  "dependencies": {}
 }
