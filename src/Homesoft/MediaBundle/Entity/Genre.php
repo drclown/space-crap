@@ -29,14 +29,6 @@ class Genre
     private $id;
 
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->movies = new ArrayCollection();
-    }
-
-    /**
      * Set name
      *
      * @param string $name

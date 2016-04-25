@@ -5,17 +5,24 @@ namespace Homesoft\MediaBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Series
+ * Images
  *
- * @ORM\Table(name="series", indexes={@ORM\Index(name="fk_series_images1_idx", columns={"image_id"})})
+ * @ORM\Table(name="images")
  * @ORM\Entity
  */
-class Serie
+class Image
 {
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=45, nullable=false)
+     * @ORM\Column(name="url", type="string", length=100, nullable=false)
+     */
+    private $url;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=100, nullable=true)
      */
     private $title;
 
@@ -28,27 +35,36 @@ class Serie
      */
     private $id;
 
-    /**
-     * @var Image
-     *
-     * @ORM\ManyToOne(targetEntity="Image")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="image_id", referencedColumnName="id")
-     * })
-     */
-    private $image;
+
 
     /**
-     * @ORM\OneToOne(targetEntity="File")
+     * Set url
      *
+     * @param string $url
+     * @return Image
      */
-    private $file;
+    public function setUrl($url)
+    {
+        $this->url = $url;
+
+        return $this;
+    }
+
+    /**
+     * Get url
+     *
+     * @return string 
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
 
     /**
      * Set title
      *
      * @param string $title
-     * @return Serie
+     * @return Image
      */
     public function setTitle($title)
     {
@@ -75,28 +91,5 @@ class Serie
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set image
-     *
-     * @param Image $image
-     * @return Serie
-     */
-    public function setImage(Image $image = null)
-    {
-        $this->image = $image;
-
-        return $this;
-    }
-
-    /**
-     * Get image
-     *
-     * @return Image
-     */
-    public function getImage()
-    {
-        return $this->image;
     }
 }

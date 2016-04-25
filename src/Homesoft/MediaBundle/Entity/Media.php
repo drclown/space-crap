@@ -1,0 +1,263 @@
+<?php
+
+namespace Homesoft\MediaBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Media
+ *
+ * @ORM\Table(name="medias")
+ * @ORM\Entity(repositoryClass="Homesoft\MediaBundle\Repository\MediaRepository")
+ */
+class Media
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=255)
+     */
+    private $title;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="synopsis", type="string", length=1000)
+     */
+    private $synopsis;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateRelease", type="datetime", nullable=true)
+     */
+    private $dateRelease;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nationality", type="string", length=255, nullable=true)
+     */
+    private $nationality;
+
+
+    /**
+     * @var Image
+     *
+     * @ORM\ManyToOne(targetEntity="Image")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="image_id", referencedColumnName="id")
+     * })
+     */
+    private $image;
+
+    /**
+     * @ORM\OneToOne(targetEntity="File")
+     *
+     */
+    private $file;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Homesoft\MediaBundle\Entity\Genre", cascade={"persist"})
+     */
+    private $genres;
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return Media
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string 
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set synopsis
+     *
+     * @param string $synopsis
+     * @return Media
+     */
+    public function setSynopsis($synopsis)
+    {
+        $this->synopsis = $synopsis;
+
+        return $this;
+    }
+
+    /**
+     * Get synopsis
+     *
+     * @return string 
+     */
+    public function getSynopsis()
+    {
+        return $this->synopsis;
+    }
+
+    /**
+     * Set dateRelease
+     *
+     * @param \DateTime $dateRelease
+     * @return Media
+     */
+    public function setDateRelease($dateRelease)
+    {
+        $this->dateRelease = $dateRelease;
+
+        return $this;
+    }
+
+    /**
+     * Get dateRelease
+     *
+     * @return \DateTime 
+     */
+    public function getDateRelease()
+    {
+        return $this->dateRelease;
+    }
+
+    /**
+     * Set nationality
+     *
+     * @param string $nationality
+     * @return Media
+     */
+    public function setNationality($nationality)
+    {
+        $this->nationality = $nationality;
+
+        return $this;
+    }
+
+    /**
+     * Get nationality
+     *
+     * @return string 
+     */
+    public function getNationality()
+    {
+        return $this->nationality;
+    }
+
+    /**
+     * Set image
+     *
+     * @param \Homesoft\MediaBundle\Entity\Image $image
+     * @return Media
+     */
+    public function setImage(\Homesoft\MediaBundle\Entity\Image $image = null)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \Homesoft\MediaBundle\Entity\Image 
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Set file
+     *
+     * @param \Homesoft\MediaBundle\Entity\File $file
+     * @return Media
+     */
+    public function setFile(\Homesoft\MediaBundle\Entity\File $file = null)
+    {
+        $this->file = $file;
+
+        return $this;
+    }
+
+    /**
+     * Get file
+     *
+     * @return \Homesoft\MediaBundle\Entity\File 
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->genres = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add genres
+     *
+     * @param \Homesoft\MediaBundle\Entity\Genre $genres
+     * @return Media
+     */
+    public function addGenre(\Homesoft\MediaBundle\Entity\Genre $genres)
+    {
+        $this->genres[] = $genres;
+
+        return $this;
+    }
+
+    /**
+     * Remove genres
+     *
+     * @param \Homesoft\MediaBundle\Entity\Genre $genres
+     */
+    public function removeGenre(\Homesoft\MediaBundle\Entity\Genre $genres)
+    {
+        $this->genres->removeElement($genres);
+    }
+
+    /**
+     * Get genres
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getGenres()
+    {
+        return $this->genres;
+    }
+}

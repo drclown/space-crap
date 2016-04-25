@@ -1,0 +1,4 @@
+services:
+#    homesoft_media.example:
+#        class: Homesoft\MediaBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]

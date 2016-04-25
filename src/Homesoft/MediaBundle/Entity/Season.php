@@ -5,17 +5,17 @@ namespace Homesoft\MediaBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Series
+ * Seasons
  *
- * @ORM\Table(name="series", indexes={@ORM\Index(name="fk_series_images1_idx", columns={"image_id"})})
+ * @ORM\Table(name="seasons", indexes={@ORM\Index(name="fk_serie1_idx", columns={"media_id"})})
  * @ORM\Entity
  */
-class Serie
+class Season
 {
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=45, nullable=false)
+     * @ORM\Column(name="title", type="string", length=45, nullable=true)
      */
     private $title;
 
@@ -29,26 +29,21 @@ class Serie
     private $id;
 
     /**
-     * @var Image
+     * @var Media
      *
-     * @ORM\ManyToOne(targetEntity="Image")
+     * @ORM\ManyToOne(targetEntity="Media")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="image_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="media_id", referencedColumnName="id")
      * })
      */
-    private $image;
+    private $media;
 
-    /**
-     * @ORM\OneToOne(targetEntity="File")
-     *
-     */
-    private $file;
 
     /**
      * Set title
      *
      * @param string $title
-     * @return Serie
+     * @return Season
      */
     public function setTitle($title)
     {
@@ -78,25 +73,25 @@ class Serie
     }
 
     /**
-     * Set image
+     * Set media
      *
-     * @param Image $image
-     * @return Serie
+     * @param \Homesoft\MediaBundle\Entity\Media $media
+     * @return Season
      */
-    public function setImage(Image $image = null)
+    public function setMedia(\Homesoft\MediaBundle\Entity\Media $media = null)
     {
-        $this->image = $image;
+        $this->media = $media;
 
         return $this;
     }
 
     /**
-     * Get image
+     * Get media
      *
-     * @return Image
+     * @return \Homesoft\MediaBundle\Entity\Media 
      */
-    public function getImage()
+    public function getMedia()
     {
-        return $this->image;
+        return $this->media;
     }
 }

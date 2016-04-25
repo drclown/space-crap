@@ -1,6 +1,7 @@
 <?php
 
-namespace Homesoft\SynchronizationTmdbBundle\Entity;
+namespace Homesoft\MediaBundle\Entity;
+use Doctrine\Common\Collections\ArrayCollection;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -22,13 +23,6 @@ class Movie
     /**
      * @var string
      *
-     * @ORM\Column(name="url", type="string", length=150, nullable=false)
-     */
-    private $url;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="synopsis", type="string", length=500, nullable=true)
      */
     private $synopsis;
@@ -43,9 +37,9 @@ class Movie
     private $id;
 
     /**
-     * @var \Homesoft\SynchronizationTmdbBundle\Entity\Images
+     * @var Image
      *
-     * @ORM\ManyToOne(targetEntity="Homesoft\SynchronizationTmdbBundle\Entity\Images")
+     * @ORM\ManyToOne(targetEntity="Image")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="image_id", referencedColumnName="id")
      * })
@@ -53,9 +47,15 @@ class Movie
     private $image;
 
     /**
+     * @ORM\OneToOne(targetEntity="File")
+     * 
+     */
+    private $file;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Homesoft\SynchronizationTmdbBundle\Entity\Genres", inversedBy="movies")
+     * @ORM\ManyToMany(targetEntity="Genre", inversedBy="movies")
      * @ORM\JoinTable(name="movies_has_genres",
      *   joinColumns={
      *     @ORM\JoinColumn(name="movies_id", referencedColumnName="id")
@@ -72,7 +72,142 @@ class Movie
      */
     public function __construct()
     {
-        $this->genres = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->genres = new ArrayCollection();
     }
 
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return Movie
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string 
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set url
+     *
+     * @param string $url
+     * @return Movie
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+
+        return $this;
+    }
+
+    /**
+     * Get url
+     *
+     * @return string 
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * Set synopsis
+     *
+     * @param string $synopsis
+     * @return Movie
+     */
+    public function setSynopsis($synopsis)
+    {
+        $this->synopsis = $synopsis;
+
+        return $this;
+    }
+
+    /**
+     * Get synopsis
+     *
+     * @return string 
+     */
+    public function getSynopsis()
+    {
+        return $this->synopsis;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set image
+     *
+     * @param Image $image
+     * @return Movie
+     */
+    public function setImage(Image $image = null)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return Image
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Add genre
+     *
+     * @param Genre $genre
+     * @return Movie
+     */
+    public function addGenre(Genre $genre)
+    {
+        $this->genres[] = $genre;
+
+        return $this;
+    }
+
+    /**
+     * Remove genre
+     *
+     * @param Genre $genre
+     */
+    public function removeGenre(Genre $genre)
+    {
+        $this->genres->removeElement($genre);
+    }
+
+    /**
+     * Get genres
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getGenres()
+    {
+        return $this->genres;
+    }
 }

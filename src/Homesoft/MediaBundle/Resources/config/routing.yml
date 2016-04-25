@@ -1,0 +1,9 @@
+homesoft_media_homepage:
+    path:     /
+    defaults: { _controller: HomesoftMediaBundle:Default:index }
+
+homesoft_medias_get:
+    path:   /get-movies-files
+    defaults: { _controller: HomesoftMediaBundle:Default:getMoviesFiles }
+    requirements:
+        methods: POST

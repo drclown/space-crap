@@ -1,6 +1,6 @@
 <?php
 
-namespace Homesoft\SynchronizationTmdbBundle\Entity;
+namespace Homesoft\MediaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -29,14 +29,46 @@ class Season
     private $id;
 
     /**
-     * @var \Homesoft\SynchronizationTmdbBundle\Entity\Series
+     * @var Media
      *
-     * @ORM\ManyToOne(targetEntity="Homesoft\SynchronizationTmdbBundle\Entity\Series")
+     * @ORM\ManyToOne(targetEntity="Media")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="serie_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="media_id", referencedColumnName="id")
      * })
      */
-    private $serie;
+    private $media;
 
 
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return Season
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string 
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 }
