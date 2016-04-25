@@ -1,0 +1,42 @@
+<?php
+
+namespace Homesoft\SynchronizationTmdbBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Seasons
+ *
+ * @ORM\Table(name="seasons", indexes={@ORM\Index(name="fk_seasons_series1_idx", columns={"serie_id"})})
+ * @ORM\Entity
+ */
+class Season
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=45, nullable=true)
+     */
+    private $title;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var \Homesoft\SynchronizationTmdbBundle\Entity\Series
+     *
+     * @ORM\ManyToOne(targetEntity="Homesoft\SynchronizationTmdbBundle\Entity\Series")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="serie_id", referencedColumnName="id")
+     * })
+     */
+    private $serie;
+
+
+}

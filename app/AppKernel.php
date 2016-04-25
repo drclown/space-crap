@@ -17,7 +17,9 @@ class AppKernel extends Kernel
             new Homesoft\PlatformFilesBundle\HomesoftPlatformFilesBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
-            new Homesoft\RemoteControlBundle\HomesoftRemoteControlBundle()
+            new Homesoft\RemoteControlBundle\HomesoftRemoteControlBundle(),
+            new Homesoft\ExternalDiskBundle\HomesoftExternalDiskBundle(),
+            new Homesoft\MediaBundle\HomesoftMediaBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
@@ -25,6 +27,7 @@ class AppKernel extends Kernel
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
+            $bundles[] = new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle();
         }
 
         return $bundles;

@@ -21,8 +21,8 @@ var listRemotes = angular.module('listRemotes',[]);
 
 spaceCrapApp.controller('remoteCtrl', ['$scope', '$http', "$rootScope",
     function($scope, $http, $rootScope) {
-       $scope.remotes = [];
-       var responsePromise = $http.get(Routing.generate("homesoft_platform_files_get_remotes"));
+        $scope.remotes = [];
+        var responsePromise = $http.get(Routing.generate("homesoft_platform_files_get_remotes"));
         responsePromise.success(function(remotes, status, headers, config) {
             $scope.remotes = remotes;
         });
@@ -33,33 +33,30 @@ spaceCrapApp.controller('remoteCtrl', ['$scope', '$http', "$rootScope",
     }
 ]);
 
-spaceCrapApp.controller('mediaCtrl', ['$scope', '$http',
-    function($scope, $http ) {
-
+spaceCrapApp.controller('mediaCtrl', ['$scope', '$http', "$templateCache",
+    function($scope, $http, $templateCache ) {
         $scope.$on('eventLoadMedia', function (event, args) {
             $scope.mediaDirectory = args.mediaDirectory;
-            $scope.medias = [];
+            $http ( {
+                method: "POST",
+                url: Routing.generate("homesoft_platform_files_get_files"),
+                data: "mediaDirectory="+$scope.mediaDirectory,
+                cache: $templateCache,
+                headers : {'Content-Type': 'application/x-www-form-urlencoded'}
+            } ).
+            then(function(response) {
+                var medias = $scope.medias = [];
+                var mdb = require('moviedb')('c971d5aa22ac894f5f011b15584d9f78');
 
-            var url = Routing.generate("homesoft_platform_files_get_files");
-            $.ajax({
-                data: {mediaDirectory: $scope.mediaDirectory},
-                url: url,
-                type:'POST',
-                success: function () {
-                    console.log("yo");
-                }
+                mdb.searchMovie({query: 'Alien' }, function(err, res){
+                    console.log(res);
+                });
+
+                $scope.medias = response.data;
+            }, function(response) {
+                console.log(response.data || "Request failed");
+                console.log(response.status);
             });
-            var req = {
-                method: 'POST',
-                url: url,
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                data: {mediaDirectory: $scope.mediaDirectory}
-            }
-
-            $http(req).then(function(){console.log("yo")}, function(){});
-
         });
     }
 ]);

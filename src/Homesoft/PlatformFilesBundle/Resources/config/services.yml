@@ -1,11 +1,5 @@
 services:
     homesoft_platform_files.remote_scanner:
         class: Homesoft\PlatformFilesBundle\services\RemoteScanner
-    homesoft_platform_files.omx_reader:
-        class: Homesoft\PlatformFilesBundle\services\OmxReader
-    homesoft_platform_files.vlc_reader:
-        class: Homesoft\PlatformFilesBundle\services\VlcReader
     homesoft_platform_files.system_scanner:
         class: Homesoft\PlatformFilesBundle\services\SystemScanner
-    homesoft_platform_files.remote:
-        class: Homesoft\PlatformFilesBundle\services\Remote

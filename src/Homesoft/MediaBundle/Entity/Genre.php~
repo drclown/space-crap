@@ -1,0 +1,46 @@
+<?php
+
+namespace Homesoft\SynchronizationTmdbBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Genres
+ *
+ * @ORM\Table(name="genres")
+ * @ORM\Entity
+ */
+class Genre
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=50, nullable=true)
+     */
+    private $name;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Homesoft\SynchronizationTmdbBundle\Entity\Movies", mappedBy="genres")
+     */
+    private $movies;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->movies = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+}

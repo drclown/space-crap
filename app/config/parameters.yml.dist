@@ -4,5 +4,12 @@
 parameters:
     tmdb_key: c971d5aa22ac894f5f011b15584d9f78
 
+    database_host: localhost
+    database_port: null
+    database_name: space_crap
+    database_user: root
+    database_password: null
+
+
     # A secret key that's used to generate certain security-related tokens
-    secret:            ThisTokenIsNotSoSecretChangeIt
+    secret:            93e923bb67ae1f894ffa07c83f4525dc973f58c9

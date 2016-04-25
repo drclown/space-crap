@@ -94,7 +94,7 @@ class RemoteScanner {
             
             $media->setExtension($this->getExtension($basename));
             $media->setPath($file->getRealPath());
-            $media->setName($this->getTitleMedia($basename));
+            $media->setTitle($this->getTitleMedia($basename));
             $files->addMedias($media);
         }
         return $files;

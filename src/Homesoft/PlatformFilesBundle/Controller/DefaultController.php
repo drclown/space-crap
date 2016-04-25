@@ -2,9 +2,11 @@
 
 namespace Homesoft\PlatformFilesBundle\Controller;
 
+use Homesoft\PlatformFilesBundle\Entity\Image;
 use Homesoft\PlatformFilesBundle\services;
 use Homesoft\PlatformFilesBundle\services\RemoteScanner;
 use Homesoft\PlatformFilesBundle\services\SystemScanner;
+use Homesoft\PlatformFilesBundle\services\TmdbAPI;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,8 +34,11 @@ class DefaultController extends Controller {
     public function getFilesAction(Request $request) {
         $mediaDirectory = $request->request->get("mediaDirectory");
 
+        $key = $this->container->getParameter('tmdb_key');
+
         $remoteScanner = new RemoteScanner($mediaDirectory);
         $medias = $remoteScanner->getMedias($mediaDirectory);
+
         $response = new Response(json_encode($medias->getJson()));
         $response->headers->set('Content-Type', 'application/json');
         return $response;

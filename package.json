@@ -27,5 +27,7 @@
     "matchdep": "^1.0.1",
     "watch": "^0.17.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "moviedb": "^0.2.3"
+  }
 }

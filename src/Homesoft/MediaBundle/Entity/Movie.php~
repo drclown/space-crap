@@ -1,0 +1,78 @@
+<?php
+
+namespace Homesoft\SynchronizationTmdbBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Movies
+ *
+ * @ORM\Table(name="movies", indexes={@ORM\Index(name="fk_movies_images_idx", columns={"image_id"})})
+ * @ORM\Entity
+ */
+class Movie
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=45, nullable=false)
+     */
+    private $title;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="url", type="string", length=150, nullable=false)
+     */
+    private $url;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="synopsis", type="string", length=500, nullable=true)
+     */
+    private $synopsis;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var \Homesoft\SynchronizationTmdbBundle\Entity\Images
+     *
+     * @ORM\ManyToOne(targetEntity="Homesoft\SynchronizationTmdbBundle\Entity\Images")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="image_id", referencedColumnName="id")
+     * })
+     */
+    private $image;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Homesoft\SynchronizationTmdbBundle\Entity\Genres", inversedBy="movies")
+     * @ORM\JoinTable(name="movies_has_genres",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="movies_id", referencedColumnName="id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="genres_id", referencedColumnName="id")
+     *   }
+     * )
+     */
+    private $genres;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->genres = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+}

@@ -1,0 +1,7 @@
+homesoft_external_disk_homepage:
+    path:     /
+    defaults: { _controller: HomesoftExternalDiskBundle:Default:index }
+
+homesoft_external_disk_get:
+    path:   /externals-disks
+    defaults: { _controller: HomesoftExternalDiskBundle:Default:getExternalsDisks }
