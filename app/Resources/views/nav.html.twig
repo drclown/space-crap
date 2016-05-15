@@ -1,28 +1,28 @@
-<nav id="nav-space-crap" class="navbar navbar-default" ng-controller="remoteCtrl">
+<nav id="nav-space-crap" class="navbar navbar-default" ng-controller="externalDiskCtrl">
     <div class="navbar-header active">
         <a id="/media" class="navbar-brand load-tree" href="#">/media</a>
     </div>
     <ul class="nav navbar-nav">
-        <li class="dropdown" ng-show="!remotes.length">
+        <li class="dropdown" ng-show="!externalsDisks.length">
             <a class="dropdown-toggle">0 remote found</a>
         </li>
-        <li ng-repeat="remote in remotes" class="dropdown">
+        <li ng-repeat="externalDisk in externalsDisks" class="dropdown">
             <a href="#"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                <span>{[{ remote.basename }]}</span>
+                <span>{[{ externalDisk.name }]}</span>
                 <span class="caret"></span>
             </a>
-            <ul class="dropdown-menu">
-                <li ng-repeat="mediaDirectory in remote.mediaDirectories">
+            <!--<ul class="dropdown-menu">
+                <li ng-repeat="mediaDirectory in externalDisk.mediaDirectories">
                     <a href="#" ng-click="loadMedias(mediaDirectory.path)">
                         <span class="basename">{[{ mediaDirectory.basename }]}</span>
                     </a>
                 </li>
-            </ul>
+            </ul>-->
         </li>
     </ul>
     <div class="pull-right col-sm-1">
         <a href="#" class="navbar-btn btn btn-default" id="refresh">
-            <span class="glyphicon glyphicon-refresh"></span>
+            <span class="glyphicon glyphicon-transfer"></span>
         </a>
     </div>
 </nav>

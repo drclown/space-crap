@@ -2,6 +2,8 @@
 
 namespace Homesoft\MediaBundle\Controller;
 
+use Homesoft\ExternalDiskBundle\Entity\ExternalDisk;
+use Homesoft\MediaBundle\Service\ApiTmdb;
 use Homesoft\MediaBundle\Service\MediasResearcher;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Serializer\Serializer;
@@ -12,29 +14,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
 
-class DefaultController extends Controller
-{
-    public function indexAction()
-    {
-        return $this->render('HomesoftMediaBundle:Default:index.html.twig');
-    }
+class DefaultController extends Controller {
 
-    public function SynchronizationMoviesAction(Request $request) {
-        $id = $request->request->get("idExternalDisk");
-        $repository = $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository('HomesoftExternalDiskBundle:ExternalDisk')
-        ;
-        $externalDisk = $repository->find($id);
-
-
-    }
-    public function SynchronizationSeries(Request $request) {
-        $moviesPath = $request->request->get("id");
-    }
-
-    public function getMoviesFilesAction(Request $request){
+    public function scanFilesAction(Request $request){
         $moviesPath = $request->request->get("moviesPath");
         $mediaResearcher = new MediasResearcher();
         $jsonContent = "";
@@ -55,6 +37,23 @@ class DefaultController extends Controller
         $response = new Response($jsonContent);
         $response->headers->set('Content-Type', 'application/json');
         return $response;
+    }
 
+    public function getFilesToSynchronizeAction(ExternalDisk $id) {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository("HomesoftMediaBundle:File");
+        $files = $repository->findAllWithoutMediaByIdExternalDisk($id);
+        $jsonContent = json_encode($files);
+        $response = new Response($jsonContent);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+    }
+
+    public function getMediaAction($title) {
+
+        $apiTmdb = new ApiTmdb();
+        $apiTmdb->getMedia($title);
+        $response = new Response();
+        return $response;
     }
 }

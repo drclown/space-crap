@@ -3,7 +3,20 @@ homesoft_media_homepage:
     defaults: { _controller: HomesoftMediaBundle:Default:index }
 
 homesoft_medias_get:
-    path:   /get-movies-files
-    defaults: { _controller: HomesoftMediaBundle:Default:getMoviesFiles }
+    path:   /scan/files
+    defaults: { _controller: HomesoftMediaBundle:Default:scanFiles }
     requirements:
         methods: POST
+
+homesoft_get_files_to_synchronize:
+    path:   /external-disk/{id}/files/synchronize
+    defaults: { _controller: HomesoftMediaBundle:Default:getFilesToSynchronize }
+    requirements:
+        methods: GET
+        id: \d+
+
+homesoft_get_media_by_title:
+    path: /medias/{title}
+    defaults: { _controller: HomesoftMediaBundle:Default:getMedia }
+    methods: GET
+

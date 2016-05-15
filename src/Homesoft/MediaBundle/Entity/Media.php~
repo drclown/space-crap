@@ -61,19 +61,14 @@ class Media
     private $image;
 
     /**
-     * @ORM\OneToOne(targetEntity="File")
-     *
+     * @ORM\ManyToOne(targetEntity="File", inversedBy="media")
+     * @ORM\JoinColumn(name="file_id", referencedColumnName="id")
      */
-    private $file;
-
-    /**
-     * @ORM\OneToOne(targetEntity="Type")
-     *
-     */
-    private $type;
+    private $files;
 
     /**
      * @ORM\ManyToMany(targetEntity="Homesoft\MediaBundle\Entity\Genre", cascade={"persist"})
+     *
      */
     private $genres;
 
@@ -202,49 +197,45 @@ class Media
         return $this->image;
     }
 
+
     /**
-     * Set file
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->genres = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add genres
      *
-     * @param \Homesoft\MediaBundle\Entity\File $file
+     * @param \Homesoft\MediaBundle\Entity\Genre $genres
      * @return Media
      */
-    public function setFile(\Homesoft\MediaBundle\Entity\File $file = null)
+    public function addGenre(\Homesoft\MediaBundle\Entity\Genre $genres)
     {
-        $this->file = $file;
+        $this->genres[] = $genres;
 
         return $this;
     }
 
     /**
-     * Get file
+     * Remove genres
      *
-     * @return \Homesoft\MediaBundle\Entity\File 
+     * @param \Homesoft\MediaBundle\Entity\Genre $genres
      */
-    public function getFile()
+    public function removeGenre(\Homesoft\MediaBundle\Entity\Genre $genres)
     {
-        return $this->file;
+        $this->genres->removeElement($genres);
     }
 
     /**
-     * Set type
+     * Get genres
      *
-     * @param \Homesoft\MediaBundle\Entity\Type $type
-     * @return Media
+     * @return \Doctrine\Common\Collections\Collection 
      */
-    public function setType(\Homesoft\MediaBundle\Entity\Type $type = null)
+    public function getGenres()
     {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return \Homesoft\MediaBundle\Entity\Type 
-     */
-    public function getType()
-    {
-        return $this->type;
+        return $this->genres;
     }
 }

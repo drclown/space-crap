@@ -24,7 +24,7 @@ class File
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255, unique=true)
      */
     private $name;
 
@@ -60,6 +60,11 @@ class File
      * @ORM\JoinColumn(nullable=false)
      */
     private $externalDisk;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Media", inversedBy="files")
+     */
+    private $media;
 
 
     /**
@@ -208,5 +213,28 @@ class File
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * Set media
+     *
+     * @param \Homesoft\MediaBundle\Entity\Media $media
+     * @return File
+     */
+    public function setMedia(\Homesoft\MediaBundle\Entity\Media $media = null)
+    {
+        $this->media = $media;
+
+        return $this;
+    }
+
+    /**
+     * Get media
+     *
+     * @return \Homesoft\MediaBundle\Entity\Media 
+     */
+    public function getMedia()
+    {
+        return $this->media;
     }
 }

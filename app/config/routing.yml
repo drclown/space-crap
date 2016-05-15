@@ -1,13 +1,16 @@
-homesoft_media:
-    resource: "@HomesoftMediaBundle/Resources/config/routing.yml"
-    prefix:   /
-
 # app/config/routing.yml
 
+#homesoft_media:
+#    resource: "@HomesoftMediaBundle/Resources/config/routing.yml"
+#    prefix:   /
 
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
 
 homesoft_platform_files:
+    resource: "@HomesoftPlatformFilesBundle/Resources/config/routing.yml"
+    prefix:   /
+
+homesoft_externals_disks:
     resource: "@HomesoftExternalDiskBundle/Resources/config/routing.yml"
     prefix:   /

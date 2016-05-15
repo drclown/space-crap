@@ -8,7 +8,8 @@
 
 namespace Homesoft\MediaBundle\Service;
 
-use \Homesoft\MediaBundle\Entity\Movie;
+use \Homesoft\MediaBundle\Entity\Media;
+use \Homesoft\MediaBundle\Entity\File;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Finder\Finder;
 

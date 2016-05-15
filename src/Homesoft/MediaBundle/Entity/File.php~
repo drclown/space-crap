@@ -24,7 +24,7 @@ class File
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255, unique=true)
      */
     private $name;
 
@@ -50,10 +50,21 @@ class File
     private $size;
 
     /**
+     * @ORM\OneToOne(targetEntity="Type")
+     *
+     */
+    private $type;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Homesoft\ExternalDiskBundle\Entity\ExternalDisk")
      * @ORM\JoinColumn(nullable=false)
      */
     private $externalDisk;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Media", mappedBy="file")
+     */
+    private $media;
 
 
     /**
@@ -156,5 +167,51 @@ class File
     public function getSize()
     {
         return $this->size;
+    }
+
+    /**
+     * Set externalDisk
+     *
+     * @param \Homesoft\ExternalDiskBundle\Entity\ExternalDisk $externalDisk
+     * @return File
+     */
+    public function setExternalDisk(\Homesoft\ExternalDiskBundle\Entity\ExternalDisk $externalDisk)
+    {
+        $this->externalDisk = $externalDisk;
+
+        return $this;
+    }
+
+    /**
+     * Get externalDisk
+     *
+     * @return \Homesoft\ExternalDiskBundle\Entity\ExternalDisk 
+     */
+    public function getExternalDisk()
+    {
+        return $this->externalDisk;
+    }
+
+    /**
+     * Set type
+     *
+     * @param \Homesoft\MediaBundle\Entity\Type $type
+     * @return File
+     */
+    public function setType(\Homesoft\MediaBundle\Entity\Type $type = null)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return \Homesoft\MediaBundle\Entity\Type
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }

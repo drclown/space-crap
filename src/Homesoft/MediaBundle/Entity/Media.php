@@ -61,13 +61,13 @@ class Media
     private $image;
 
     /**
-     * @ORM\OneToOne(targetEntity="File")
-     *
+     * @ORM\OneToMany(targetEntity="File", mappedBy="media")
      */
-    private $file;
+    private $files;
 
     /**
      * @ORM\ManyToMany(targetEntity="Homesoft\MediaBundle\Entity\Genre", cascade={"persist"})
+     *
      */
     private $genres;
 
@@ -196,29 +196,6 @@ class Media
         return $this->image;
     }
 
-    /**
-     * Set file
-     *
-     * @param \Homesoft\MediaBundle\Entity\File $file
-     * @return Media
-     */
-    public function setFile(\Homesoft\MediaBundle\Entity\File $file = null)
-    {
-        $this->file = $file;
-
-        return $this;
-    }
-
-    /**
-     * Get file
-     *
-     * @return \Homesoft\MediaBundle\Entity\File 
-     */
-    public function getFile()
-    {
-        return $this->file;
-    }
-
 
     /**
      * Constructor
@@ -259,5 +236,28 @@ class Media
     public function getGenres()
     {
         return $this->genres;
+    }
+
+    /**
+     * Set files
+     *
+     * @param \Homesoft\MediaBundle\Entity\File $files
+     * @return Media
+     */
+    public function setFiles(\Homesoft\MediaBundle\Entity\File $files = null)
+    {
+        $this->files = $files;
+
+        return $this;
+    }
+
+    /**
+     * Get files
+     *
+     * @return \Homesoft\MediaBundle\Entity\File 
+     */
+    public function getFiles()
+    {
+        return $this->files;
     }
 }

@@ -5,7 +5,6 @@ namespace Homesoft\MediaBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Homesoft\ExternalDiskBundle\Entity\ExternalDisk;
 use Homesoft\MediaBundle\Entity\File;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 
@@ -31,24 +30,6 @@ class LoadFile implements FixtureInterface, OrderedFixtureInterface
                 "path"      => "C:\\media\\externalDisk\\raspberry-server\\public\\films\\",
                 "name"      => 'LeSeigneurDesAnneaux',
                 "extension" => "mkv",
-                "size"      => 650000000
-            ),
-            array(
-                "path"      => "C:\\media\\externalDisk\\raspberry-server\\public\\films\\",
-                "name"      => 'Willow',
-                "extension" => "avi",
-                "size"      => 650000000
-            ),
-            array(
-                "path"      => "C:\\media\\externalDisk\\raspberry-server\\public\\films\\",
-                "name"      => 'Matrix',
-                "extension" => "mkv",
-                "size"      => 650000000
-            ),
-            array(
-                "path"      => "C:\\media\\externalDisk\\raspberry-server\\public\\films\\",
-                "name"      => 'LeSeigneurDesAnneaux',
-                "extension" => "mp4",
                 "size"      => 650000000
             )
         );
